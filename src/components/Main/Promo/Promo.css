@@ -1,0 +1,38 @@
+.promo {
+    display: flex;
+    flex-direction: column;
+    background:#073042;
+    min-height: 560px;
+    width: 100%;
+    align-items: center;
+}
+
+.promo__name {
+  margin: 50px 70px 102px;
+  width: 626px;
+  min-height: 104px;
+  font-family: Inter;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 52px;
+  color: #FFFFFF;
+  letter-spacing: -0.04em;
+}
+
+.promo__image {
+  position: absolute;
+  bottom: -256px;
+  right: 70px;
+  display: flex;
+  width: 722px;
+  height: 244px;
+  margin: 0 70px 10px 0;
+}
+
+.promo__container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  margin: 0 70px;
+}
