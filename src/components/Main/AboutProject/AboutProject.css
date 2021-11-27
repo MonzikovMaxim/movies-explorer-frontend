@@ -63,6 +63,36 @@
   justify-content: space-between;
 }
 
+.about-project__line {
+  width: 19%;
+  text-align: center;
+  height: 36px;
+  background: #2BE080;
+}
+
+.about-project__line_large {
+  background: #F2F2F2;
+  width: 81%;
+}
+
+.about-project__line-subtitle {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-align: center;
+  color: #000000;
+  margin: 9px 14px;
+}
+
+.about-project__line-subtitle_grey {
+  margin: 0;
+  padding: 14px 0 0 0;
+  font-weight: 500;
+  color: #A0A0A0;
+}
+
 .about-project__container {
   display: flex;
   justify-content: space-between;

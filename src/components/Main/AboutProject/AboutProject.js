@@ -6,7 +6,7 @@ function AboutProject() {
     <section className="about-project">
       <div className="about-project__container">
         <div className="about-project__title-box">
-          <p className="about-project__title">О проекте</p>
+          <h2 className="about-project__title">О проекте</h2>
         </div>
         <div className="about-project__box">
           <div className="about-project__block">
@@ -20,10 +20,12 @@ function AboutProject() {
         </div>
         <div className="about-project__line-box">
           <div className="about-project__line">
-            <div className="about-project__time">1 неделя</div>
+            <p className="about-project__line-subtitle">1 неделя</p>
+            <p className=" about-project__line-subtitle about-project__line-subtitle_grey">Back-end</p>
           </div>
-          <div className="about-project__line">
-            <div className="about-project__time">4 неделя</div>
+          <div className="about-project__line about-project__line_large">
+            <p className="about-project__line-subtitle">4 неделя</p>
+            <p className="about-project__line-subtitle about-project__line-subtitle_grey">Front-end</p>
           </div>
         </div>
       </div>
