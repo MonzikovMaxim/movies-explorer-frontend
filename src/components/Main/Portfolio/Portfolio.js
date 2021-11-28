@@ -1,6 +1,7 @@
 import React from 'react';
 import './Portfolio.css'
 import photo from '../../../images/photo.jpg';
+import arrow from '../../../images/arrow.svg';
 
 function Portfolio() {
   return (
@@ -22,6 +23,21 @@ function Portfolio() {
         </div>
           <img className="portfolio__photo" src={photo} alt="моё фото"></img>
         </article>
+        <div className="portfolio__block">
+          <div className="portfolio__subtitle">Портфолио</div>
+          <div className="portfolio__site-box">
+            <a href="https://practicum.yandex.ru/web/" target="_blank" rel="noreferrer" className="portfolio__site-link">Статичный сайт</a>
+            <img className="portfolio__arrow" src={arrow} alt="стрелочка"></img>
+          </div>
+          <div className="portfolio__site-box">
+            <a href="https://monzikovmaxim.github.io/russian-travel/" rel="noreferrer" target="_blank" className="portfolio__site-link">Адаптивный сайт</a>
+            <img className="portfolio__arrow" src={arrow} alt="стрелочка"></img>
+          </div>
+          <div className="portfolio__site-box">
+            <a href="https://thisismesto.students.nomoredomains.monster"  rel="noreferrer" target="_blank" className="portfolio__site-link">Одностраничное приложение</a>
+            <img className="portfolio__arrow" src={arrow} alt="стрелочка"></img>
+          </div>
+        </div>
       </div>
     </section>
   )
