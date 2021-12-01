@@ -5,6 +5,7 @@ import Header from '../Header/Header';
 import Login from '../Login/Login';
 import Register from "../Register/Register";
 import Main from '../Main/Main';
+import Error from '../Error/Error';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
             formQuestion="Ещё не зарегистрированы?"/>
         </Route>
           <Main exact path="/" />
+          <Route path='*'>
+            <Error />
+          </Route>
       </Switch>
     </div>
   );

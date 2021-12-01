@@ -21,6 +21,7 @@
   .form__container {
     margin: 56px auto;
     width: 80%;
+    height: 780px;
   }
 }
 
@@ -120,7 +121,6 @@
 }
 
 .form__input:focus {
-  border-radius: 3px;
   border-bottom: 1px solid #3456F3;
 }
 
