@@ -1,23 +1,25 @@
 import React from 'react';
+import { Route, Link } from 'react-router-dom';
 import './Header.css'
-import { Route, Routes, Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 
 function Header() {
   return (
-    <section className="header">
-      <div className="header__container">
-        <img className="header__logo" src={logo} alt="Логотип" />
-        <div className="header__box">
-        <Routes>
-          <Route path="/signin"></Route>
-          <Route path="/signup"></Route>
-        </Routes>
-        <Link to="/signup" className="header__register">Регистрация</Link>
-        <Link to="/signin" className="header__login">Войти</Link>
+    <Route exact path="/">
+      <header className="header">
+        <div className="header__container">
+          <Link to="/">
+            <img className="header__logo" src={logo} alt="Логотип" />
+          </Link>
+          <div className="header__box">
+            <Link className="header__register" to="/signup">Регистрация</Link>
+            <Link to="/signin">
+              <button type="button" className="header__login">Войти</button>
+            </Link>
+          </div>
         </div>
-      </div>
-    </section>
+      </header>
+    </Route>
   );
 }
 

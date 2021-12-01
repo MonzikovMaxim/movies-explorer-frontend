@@ -62,11 +62,12 @@
   }
 }
 
-@media (max-width: 425px) {
+@media (max-width: 740px) {
   .about-me__data {
     flex-direction: column-reverse;
   }
 }
+
 
 .about-me__name {
   font-style: normal;
@@ -78,7 +79,7 @@
   margin: 0;
 }
 
-@media (max-width: 425px) {
+@media (max-width: 760px) {
   .about-me__name {
     font-size: 30px;
     line-height: 36px;
@@ -117,7 +118,7 @@
 
 @media (max-width: 1040px) {
   .about-me__bio {
-    width: 364px;
+    width: 100%;
     margin: 0 0 87px;
   }
 }
@@ -141,6 +142,12 @@
   .about-me__photo {
     width: 255px;
     height: 307px;
+  }
+}
+
+@media(max-width: 740px) {
+  .about-me__photo {
+    margin: auto;
   }
 }
 

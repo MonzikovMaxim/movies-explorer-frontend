@@ -31,14 +31,14 @@
   text-align: center;
   align-items: center;
   border-radius: 3px;
-  text-decoration: none;
-  font-family: Inter;
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 16px;
   color: #000000;
   padding: 8px 20px;
+  border: none;
+  outline: none;
 }
 
 @media (max-width: 425px) {
