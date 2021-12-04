@@ -14,7 +14,7 @@ function Register({textButton, formTitle, formQuestion}) {
           <h2 className="form__title">{formTitle}</h2>
           <form className="form__data">
             <p className="form__name">Имя</p>
-              <input required id="name" name="name" type="text" placeholder="" minLength="2" maxLength="40" className="form__input" onChange={e => e.target.value}></input> 
+              <input required id="name" name="name" type="text" placeholder="" className="form__input"></input> 
             <p className="form__name">E-mail</p>
               <input required id="email" name="email" type="email" placeholder="" className="form__input"></input> 
             <p className="form__name">Пароль</p>

@@ -5,17 +5,18 @@ import AboutProject from '../AboutProject/AboutProject';
 import Techs from '../Techs/Techs';
 import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
-import Footer from '../Footer/Footer';
+import Preloader from '../Preloader/Preloader';
 
-function Main() {
-  return (
+function Main({isLoading}) {
+  return isLoading ? (
+  <Preloader />
+  ) : (
     <div className="main">
       <Promo />
       <AboutProject />
       <Techs />
       <AboutMe />
       <Portfolio />
-      <Footer/>
     </div>
   )
 }

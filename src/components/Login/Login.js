@@ -18,7 +18,7 @@ function Login({textButton, formTitle, formQuestion}) {
             <p className="form__name">Пароль</p>
               <input required id="password" name="password" type="password" className="form__input"></input>
               <p className="form__error">Что-то пошло не так...</p> 
-              <button type="submit" className="submit__button-login">{textButton}</button>
+              <Link to="/movies" type="submit" className="submit__button-login">{textButton}</Link>
               <p className="form__question">{formQuestion}<Link to="/signup" className="form__link"> Регистрация</Link></p>
           </form>     
         </div>

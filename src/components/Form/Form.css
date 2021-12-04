@@ -157,7 +157,7 @@
 .submit__button-login {
   background: #3456F3;
   border: none;
-  padding: 15px 125px;
+  padding: 15px 178px;
   font-style: normal;
   font-weight: 500;
   font-size: 14px;
@@ -168,6 +168,7 @@
   transition: opacity .2s ease-in-out;
   border-radius: 3px;
   margin: 221px 0 0 0;
+  text-decoration: none;
 }
 
 .submit__button-login:hover {
@@ -176,7 +177,7 @@
 
 @media (max-width: 425px) {
   .submit__button-login {
-    padding: 15px 68px;
+    padding: 15px 113px;
     margin: 291px 0 0 0;
     font-size: 12px;
     line-height: 15px;
