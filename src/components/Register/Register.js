@@ -3,6 +3,10 @@ import { Route, Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 
 function Register({textButton, formTitle, formQuestion}) {
+  function handleSubmit(e) {
+
+    e.preventDefault();
+  }
   return (
     <Route>
       <div className="form">
@@ -11,7 +15,7 @@ function Register({textButton, formTitle, formQuestion}) {
             <img className="form__logo" src={logo} alt="Логотип" />
           </Link>
           <h2 className="form__title">{formTitle}</h2>
-          <form className="form__data">
+          <form className="form__data" onSubmit={handleSubmit}>
             <p className="form__name">Имя</p>
               <input required id="name" name="name" type="text" placeholder="" defaultValue="Максим" className="form__input"></input> 
             <p className="form__name">E-mail</p>

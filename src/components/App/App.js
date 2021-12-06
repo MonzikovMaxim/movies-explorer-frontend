@@ -28,7 +28,7 @@ function App() {
         <Route exact path="/">
           <Main />
         </Route>
-        <Route  path="/signup">
+        <Route path="/signup">
           <Register formTitle="Добро пожаловать!" textButton="Зарегистрироваться" formQuestion="Уже зарегистрированы?" />
         </Route>
         <Route path="/signin">
