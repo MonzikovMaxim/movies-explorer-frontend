@@ -28,13 +28,13 @@ function App() {
         <Route exact path="/">
           <Main />
         </Route>
-        <Route exact path="/signup">
+        <Route  path="/signup">
           <Register formTitle="Добро пожаловать!" textButton="Зарегистрироваться" formQuestion="Уже зарегистрированы?" />
         </Route>
-        <Route exact path="/signin">
+        <Route path="/signin">
           <Login formTitle="Рады видеть" textButton="Войти" formQuestion="Ещё не зарегистрированы?"/>
         </Route>
-        <Route path='*'>
+        <Route path="*">
           <Error />
         </Route>
       </Switch>
