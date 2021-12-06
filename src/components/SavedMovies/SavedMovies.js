@@ -1,6 +1,5 @@
 import React from 'react';
 import SearchForm from '../SearchForm/SearchFrom';
-import './SavedMovies.css'
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 

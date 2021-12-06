@@ -1,5 +1,4 @@
 import React from 'react';
-import '../Form/Form.css';
 import { Route, Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 

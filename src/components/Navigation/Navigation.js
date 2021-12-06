@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import { NavLink } from 'react-router-dom';
-import './Navigation.css';
 import account from '../../images/account.svg';
 
 function Navigation() {

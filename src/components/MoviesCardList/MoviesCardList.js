@@ -1,6 +1,5 @@
 import React from 'react';
 import { Route } from "react-router-dom";
-import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
 function MoviesCardList() {

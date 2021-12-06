@@ -1,5 +1,5 @@
 .header {
-  font-family: 'Inter';
+  font-family: 'Inter', 'Arial', 'sans-serif';
   display: flex;
   background:#073042;
   min-height: 74px;

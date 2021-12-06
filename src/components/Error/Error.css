@@ -1,6 +1,6 @@
 .error {
   display: flex;
-  font-family: 'Inter';
+  font-family: 'Inter', 'Arial', 'sans-serif';
   flex-direction: column;
   justify-content: center;
   min-height: calc(100vh - 246px);
