@@ -68,6 +68,23 @@
   }
 }
 
+.about-me__box {
+  width: 600px;
+}
+
+@media (max-width:850px) {
+  .about-me__box {
+    width: 364px;
+  }
+}
+
+@media (max-width:425px) {
+  .about-me__box {
+    width: 292px;
+    margin: 0 auto;
+  }
+}
+
 
 .about-me__name {
   font-style: normal;

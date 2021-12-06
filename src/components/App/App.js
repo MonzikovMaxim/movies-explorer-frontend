@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 import Header from '../Header/Header';
@@ -13,9 +13,6 @@ import Profile from "../Profile/Profile";
 
 
 function App() {
-  const [isLoading, setIsLoading] = useState(false);
-  
-
   return (
     <div className="app">
       <Header />
@@ -30,7 +27,7 @@ function App() {
           <Profile />
         </Route>
         <Route exact path="/">
-          <Main isLoading={isLoading} />
+          <Main />
         </Route>
         <Route exact path="/signup">
           <Register formTitle="Добро пожаловать!" textButton="Зарегистрироваться" formQuestion="Уже зарегистрированы?" />

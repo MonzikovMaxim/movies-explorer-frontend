@@ -14,11 +14,11 @@ function Register({textButton, formTitle, formQuestion}) {
           <h2 className="form__title">{formTitle}</h2>
           <form className="form__data">
             <p className="form__name">Имя</p>
-              <input required id="name" name="name" type="text" placeholder="" className="form__input"></input> 
+              <input required id="name" name="name" type="text" placeholder="" defaultValue="Максим" className="form__input"></input> 
             <p className="form__name">E-mail</p>
-              <input required id="email" name="email" type="email" placeholder="" className="form__input"></input> 
+              <input required id="email" name="email" type="email" placeholder="" defaultValue="pochta@yandex.ru" className="form__input"></input> 
             <p className="form__name">Пароль</p>
-              <input required id="password" name="password" type="password" placeholder="" className="form__input form__input-password"></input>
+              <input required id="password" name="password" type="password" placeholder="" defaultValue="1231" className="form__input form__input-password"></input>
               <p className="form__error">Что-то пошло не так...</p> 
               <button type="submit" className="submit__button">{textButton}</button>
           </form>

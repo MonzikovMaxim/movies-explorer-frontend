@@ -1,10 +1,12 @@
 import React from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link, NavLink } from 'react-router-dom';
 import './Header.css';
 import logo from '../../images/logo.svg';
+import account from '../../images/account.svg';
 import Navigation from '../Navigation/Navigation';
 
 function Header() {
+
   return (
     <>
       <Route exact path="/">
@@ -29,8 +31,17 @@ function Header() {
             <Link to="/">
               <img className="header__logo" src={logo} alt="Логотип" />
             </Link>
-            <Navigation />
+            <div className="link__box">
+              <NavLink exact to="/movies" activeClassName="nav__link_active" className="nav__link">Фильмы</NavLink>
+              <NavLink exact to="/saved-movies" activeClassName="nav__link_active" className="nav__link">Сохранённые фильмы</NavLink>
+            </div>
+            <div className="nav__account">
+              <NavLink exact to="/profile" className="nav__link">
+                <img src={account} alt="иконка" />
+              </NavLink>
+            </div>
           </div>
+          <Navigation />
         </header>
       </Route>
     </>

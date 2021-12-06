@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Route } from "react-router-dom";
 import './MoviesCard.css';
 import film from '../../images/film.jpg';
 
@@ -6,10 +7,13 @@ import film from '../../images/film.jpg';
 function MoviesCard() {
   const [isLiked, setIsLiked] = useState(false);
 
-  const cardLike=`movies-card__like ${isLiked ? "movies-card__like_active" : "movies-card__like"}`;
 
   function handleLikeClick() {
-    setIsLiked(true);
+    if (!isLiked) {
+      setIsLiked(true)
+    } else {
+      setIsLiked(false)
+    }
   }
 
   return (
@@ -18,7 +22,12 @@ function MoviesCard() {
       <div className="movies-card__data">
       <div className="movies-card__box">
         <p className="movies-card__name">33 слова о дизайне</p>
-        <button className={cardLike} onClick={handleLikeClick}></button>
+        <Route exact path="/movies">
+          <button className={`movies-card__like ${isLiked ? "movies-card__like_active" : "movies-card__like"}`} onClick={handleLikeClick}></button>
+        </Route>
+        <Route exact path="/saved-movies">
+        <button className="movies-card__cross" onClick={handleLikeClick}></button>
+        </Route>
       </div>
       <p className="movies-card__duration">1ч 47м</p>
       </div>

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Route } from "react-router-dom";
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 
@@ -17,9 +18,11 @@ function MoviesCardList() {
         <MoviesCard />
         <MoviesCard />
         <MoviesCard />
-        <MoviesCard />      
+        <MoviesCard />
       </ul>
-      <button className="movies-list__button">Ещё</button>
+      <Route exact path="/movies">
+        <button className="movies-list__button">Ещё</button>
+      </Route>
     </section>
   )
 }

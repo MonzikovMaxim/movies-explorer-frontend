@@ -7,7 +7,7 @@ function Portfolio() {
       <div className="portfolio__container">
           <div className="portfolio__subtitle">Портфолио</div>
           <div className="portfolio__site-box">
-            <a href="https://practicum.yandex.ru/web/" target="_blank" rel="noreferrer" className="portfolio__site-link">
+            <a href="https://github.com/MonzikovMaxim/second-project/tree/master/how-to-learn-main" target="_blank" rel="noreferrer" className="portfolio__site-link">
             <p>Статичный сайт</p>
             <p>↗</p>
             </a>

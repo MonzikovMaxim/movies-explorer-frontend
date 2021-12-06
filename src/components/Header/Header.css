@@ -12,7 +12,7 @@
 }
 
 .header__logo {
-  margin: 18px 0;
+  margin: 18px 40px 0 0;
   max-width: 38px;
   height: 38px;
   width: 100%;
@@ -104,4 +104,49 @@
   .header__container {
     margin: 0 18px;
   }
+}
+
+.link__box {
+  display: flex;
+  margin: 28px auto;
+  width: 212px;
+}
+
+.nav__link {
+  display: block;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: right;
+  color: #000000;
+  text-decoration: none;
+  margin: 0 16px 0 0;
+  transition: opacity .2s ease-in-out;
+}
+
+.nav__link:hover {
+  opacity: .7;
+}
+
+.nav__link:last-child {
+  margin: 0;
+}
+
+.nav__link_active {
+  font-weight: 500;
+}
+
+@media (max-width: 780px) {
+  .nav__link {
+    display: none;
+  }
+}
+
+.nav__account {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 30px;
+  margin: 21px 0 0;
 }
