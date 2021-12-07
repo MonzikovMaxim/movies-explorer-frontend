@@ -9,7 +9,7 @@ function SearchForm() {
         <button className="search-form__button" type="submit"></button>
       </form>
       <div className="search-form__switch">
-        <input type="checkbox" className="search-form__tumbler"></input>
+        <input required type="checkbox" className="search-form__tumbler"></input>
         <p className="search-form__subtitle">Короткометражки</p>
       </div>
       </div>

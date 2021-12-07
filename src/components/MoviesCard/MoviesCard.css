@@ -9,7 +9,7 @@
   padding: 0;
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 1200px) {
   .movies-card {
     width: 339px;
     height: 262px;
@@ -28,7 +28,7 @@
   height: 203px;
 }
 
-@media (max-width: 1180px) {
+@media (max-width: 1200px) {
   .movies-card__image {
     width: 339px;
     height: 190px;

@@ -84,7 +84,7 @@
   }
 }
 
-@media (max-width: 560px) {
+@media (max-width: 578px) {
   .about-project__subtitle {
     font-size: 18px;
     line-height: 22px;
@@ -160,7 +160,7 @@
   margin: 9px 14px;
 }
 
-@media (max-width: 560px) {
+@media (max-width: 578px) {
   .about-project__line-subtitle {
     margin: 11px 10px;
     font-size: 11px;

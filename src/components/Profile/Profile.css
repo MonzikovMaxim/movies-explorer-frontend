@@ -45,6 +45,11 @@
   border: none;
   margin: 0;
 }
+
+.profile__input-box:focus {
+  border-bottom: 1px solid #3456F3;
+}
+
 .profile__input-box:first-child {
   margin: 0 0 17px 0;
   border-bottom: 1px solid #E8E8E8;
@@ -59,7 +64,7 @@
   font-size: 11px;
   line-height: 13px;
   color: #000000;
-  width: 141px;
+  width: 40px;
 }
 
 
@@ -75,6 +80,10 @@
   text-align: end;
   outline: none;
   border: none;
+}
+
+.profile__input:focus {
+  border-bottom: 1px solid #3456F3;
 }
 
 

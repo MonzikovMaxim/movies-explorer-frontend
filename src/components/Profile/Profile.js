@@ -10,11 +10,11 @@ function Profile() {
         <div className="profile__container">
           <div className="profile__input-box">
             <p className="profile__input-name">Имя</p>
-            <input className="profile__input" type="text" placeholder="" defaultValue="Максим"></input>
+            <input required className="profile__input" type="text" placeholder="" defaultValue="Максим"></input>
           </div>
           <div className="profile__input-box">
             <p className="profile__input-name">E-mail</p>
-            <input className="profile__input" type="email" placeholder="E-mail" defaultValue="pochta@yandex.ru"></input>
+            <input required className="profile__input" type="email" placeholder="E-mail" defaultValue="pochta@yandex.ru"></input>
           </div>
           <div className="profile__buttons">
             <button className="profile__button-edit" type="submit">Редактировать</button>
