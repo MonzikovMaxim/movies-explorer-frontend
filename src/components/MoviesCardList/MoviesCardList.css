@@ -1,0 +1,83 @@
+.movies-list {
+  font-family: 'Inter', 'Arial', 'sans-serif';
+  display: flex;
+  background: #FFFFFF;
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.movies-list__container {
+  margin: 70px auto;
+  width: 100%;
+  display: grid;
+  column-gap: 30px;
+  row-gap: 37px;
+  grid-template-columns: repeat(3, 364px);
+  grid-template-rows: repeat(4, 281px);
+  padding: 0;
+  justify-content: center;
+}
+
+@media (max-width: 1280px) {
+  .movies-list__container {
+    column-gap: 23px;
+  }
+}
+
+@media (max-width: 1200px) {
+  .movies-list__container {
+    justify-content: center;
+    grid-template-columns: repeat(2, 339px);
+    grid-template-rows: repeat(4, 262px);
+    column-gap: 30px;
+    row-gap: 30px;
+  }
+}
+
+@media (max-width: 730px) {
+  .movies-list__container {
+    justify-content: center;
+    grid-template-columns: repeat(1, 300px);
+    grid-template-rows: repeat(4, 237px);
+    column-gap: 30px;
+    row-gap: 30px;
+    margin: 70px auto 50px;
+  }
+}
+
+@media (max-width: 425px) {
+  .movies-list__container {
+    row-gap: 14px;
+    margin: 40px auto 26px;
+  }
+}
+
+.movies-list__button {
+  width: 320px;
+  height: 36px;
+  background: #F9F9F9;
+  border-radius: 6px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  color: #000000;
+  margin: 0 auto 80px;
+  border: none;
+  outline: none;
+  transition: opacity .2s ease-in-out;
+  cursor: pointer;
+}
+
+.movies-list__button:hover {
+  opacity: .7;
+}
+
+@media (max-width: 425px) {
+  .movies-list__button {
+    width: 246px;
+    margin: 61px auto 89px;
+  }
+}

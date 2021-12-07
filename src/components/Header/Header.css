@@ -1,0 +1,152 @@
+.header {
+  font-family: 'Inter', 'Arial', 'sans-serif';
+  display: flex;
+  background:#073042;
+  min-height: 74px;
+  width: 100%;
+  justify-content: center;
+}
+
+.header__light {
+  background: #FFFFFF;
+}
+
+.header__logo {
+  margin: 18px 40px 0 0;
+  max-width: 38px;
+  height: 38px;
+  width: 100%;
+}
+
+.header__logo:hover {
+  opacity: 0.7;
+  transition: .3s ease-in-out opacity;
+  cursor: pointer;
+}
+
+.header__box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__login {
+  background-color: #2BE080;
+  text-align: center;
+  align-items: center;
+  border-radius: 3px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 16px;
+  color: #000000;
+  padding: 8px 20px;
+  border: none;
+  outline: none;
+}
+
+@media (max-width: 425px) {
+  .header__login {
+    padding: 5px 12px;
+    font-size: 10px;
+    line-height: 16px;
+  }
+}
+
+.header__login:hover {
+  opacity: 0.7;
+  transition: .3s ease-in-out opacity;
+  cursor: pointer;
+}
+
+.header__register {
+  font-family: Inter;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  text-align: right;
+  text-decoration: none;
+  margin-right: 30px;
+  color: #FFFFFF;
+}
+
+@media (max-width: 425px) {
+  .header__register {
+    margin-right: 14px;
+    font-size: 10px;
+    line-height: 16px;
+  }
+}
+
+.header__register:hover {
+  opacity: 0.7;
+  transition: .3s ease-in-out opacity;
+  cursor: pointer;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0 70px;
+}
+
+@media (max-width: 1024px) {
+  .header__container {
+    margin: 0 30px;
+  }
+}
+
+@media (max-width: 425px) {
+  .header__container {
+    margin: 0 18px;
+  }
+}
+
+.link__box {
+  display: flex;
+  margin: 28px auto;
+  width: 212px;
+}
+
+.nav__link {
+  display: block;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 18px;
+  text-align: right;
+  color: #000000;
+  text-decoration: none;
+  margin: 0 16px 0 0;
+  transition: opacity .2s ease-in-out;
+}
+
+.nav__link:hover {
+  opacity: .7;
+}
+
+.nav__link:last-child {
+  margin: 0;
+}
+
+.nav__link_active {
+  font-weight: 500;
+}
+
+@media (max-width: 780px) {
+  .nav__link {
+    display: none;
+  }
+}
+
+.nav__account {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  height: 30px;
+  margin: 21px 0 0;
+}

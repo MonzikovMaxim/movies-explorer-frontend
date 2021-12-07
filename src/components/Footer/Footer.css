@@ -1,0 +1,129 @@
+.footer {
+  font-family: 'Inter', 'Arial', 'sans-serif';
+  display: flex;
+  background: #FFFFFF;
+  width: 100%;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.footer__container {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 70px;
+  flex-direction: column;
+}
+
+@media (max-width: 1040px) {
+  .footer__container {
+    margin: 0 30px;
+  }
+}
+
+@media (max-width: 425px) {
+  .footer__container {
+    margin: 0 10px;
+  }
+}
+
+.footer__title-box {
+  display: flex;
+  justify-content: center;
+  border-bottom: 1px solid #E8E8E8;
+}
+
+.footer__title {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: center;
+  color: #A0A0A0;
+  margin: 80px 0 20px 0;
+}
+
+@media (max-width: 425px) {
+  .footer__title {
+    font-size: 12px;
+    line-height: 15px;
+  }
+}
+
+.footer__links {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20px 0;
+}
+
+@media (max-width: 425px) {
+  .footer__links {
+    margin: 30px auto 10px;
+    align-items: center;
+    flex-direction: column-reverse;
+    width: 100%;
+  }
+}
+
+.footer__date {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  color: #000000;
+  margin: 0;
+}
+
+@media (max-width: 425px) {
+  .footer__date {
+    font-size: 12px;
+    line-height: 15px;
+    margin-bottom: 10px;
+  }
+}
+
+.footer__links-box {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 425px) {
+  .footer__links-box {
+    flex-direction: column;
+  }
+}
+
+
+.footer__link {
+  text-decoration: none;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  text-align: right;
+  color: #000000;
+  margin: 0 20px 0 0;
+}
+
+
+.footer__link:hover {
+  opacity: 0.7;
+  transition: opacity .3s ease-in-out;
+  cursor: pointer;
+}
+
+.footer__link:last-child {
+  margin: 0;
+}
+
+@media (max-width: 425px) {
+  .footer__link {
+    margin: 0;
+    text-align: center;
+    margin-bottom: 12px;
+  }
+  .footer__link:last-child {
+    margin: 0 0 30px 0;
+  }
+
+}
