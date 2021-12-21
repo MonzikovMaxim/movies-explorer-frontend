@@ -1,31 +1,63 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { CurrentUserContext } from "../../contexts/CurrentUserContext";
+import { useFormWithValidation } from '../../utils/Validation.js';
 
+function Profile({ onSignOut }) {
+  const currentUser = React.useContext(CurrentUserContext);
+  const { values, errors, isValid, handleChange } = useFormWithValidation();
 
-function Profile() {
+  useEffect(() => {
+    values["name"] = currentUser.name;
+    values["email"] = currentUser.email;
+  }, [currentUser, values]);
+
+  function handleSignOut() {
+    onSignOut();
+  }
+
   return (
     <section className="profile">
-        <form className="profile__form">
-        <p className="profile__title">Привет, Максим!</p>
+      <form className="profile__form">
+        <p className="profile__title">{`Привет, ${currentUser.name}`}</p>
         <div className="profile__container">
           <div className="profile__input-box">
             <p className="profile__input-name">Имя</p>
-            <input required className="profile__input" type="text" placeholder="" defaultValue="Максим"></input>
+            <input
+              required
+              className="profile__input"
+              type="text"
+              placeholder="Максим"
+              onChange={handleChange}
+              defaultValue={currentUser.name}
+            ></input>
           </div>
           <div className="profile__input-box">
             <p className="profile__input-name">E-mail</p>
-            <input required className="profile__input" type="email" placeholder="E-mail" defaultValue="pochta@yandex.ru"></input>
+            <input
+              required
+              className="profile__input"
+              type="email"
+              placeholder="email"
+              onChange={handleChange}
+              defaultValue={currentUser.email}
+            ></input>
           </div>
           <div className="profile__buttons">
-            <button className="profile__button-edit" type="submit">Редактировать</button>
-            <Link to="/">
-              <button className="profile__button-exit" type="button">Выйти из аккаунта</button>
-            </Link>
+            <button className="profile__button-edit" type="submit">
+              Редактировать
+            </button>
+              <button
+                onClick={handleSignOut}
+                className="profile__button-exit"
+                type="button"
+              >
+                Выйти из аккаунта
+              </button>
           </div>
         </div>
-        </form> 
+      </form>
     </section>
-  )
+  );
 }
 
 export default Profile;

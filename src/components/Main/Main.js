@@ -6,10 +6,11 @@ import AboutMe from '../AboutMe/AboutMe';
 import Portfolio from '../Portfolio/Portfolio';
 import Preloader from '../Preloader/Preloader';
 
-function Main({isLoading}) {
-  return isLoading ? (
+function Main(props) {
+  return props.isLoading ? (
   <Preloader />
   ) : (
+    <>
     <div className="main">
       <Promo />
       <AboutProject />
@@ -17,6 +18,7 @@ function Main({isLoading}) {
       <AboutMe />
       <Portfolio />
     </div>
+    </>
   )
 }
 export default Main;

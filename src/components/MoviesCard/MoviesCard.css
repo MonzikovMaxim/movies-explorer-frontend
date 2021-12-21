@@ -26,6 +26,7 @@
 .movies-card__image {
   width: 364px;
   height: 203px;
+  object-fit: cover;
 }
 
 @media (max-width: 1200px) {

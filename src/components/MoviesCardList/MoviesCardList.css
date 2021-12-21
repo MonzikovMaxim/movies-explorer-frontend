@@ -81,3 +81,7 @@
     margin: 61px auto 89px;
   }
 }
+
+.movies-list__button_disabled {
+  display: none;
+}
