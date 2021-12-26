@@ -1,3 +1,15 @@
+export const headers = {
+  "Content-Type": "application/json"
+}
+
+export const checkAuth = (headers) => {
+  const token = localStorage.getItem('jwt');
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+  return headers;
+}
+
 export const checkStatus = (res) => {
   if (res.ok) {
   return res.json();
@@ -9,10 +21,7 @@ export const checkStatus = (res) => {
 export const getInitialMovies = () => {
   return fetch("https://api.nomoreparties.co/beatfilm-movies", {
     method: "GET",
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-    },
+    headers: checkAuth(headers),
   })
     .then((res) => checkStatus(res));
 };

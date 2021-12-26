@@ -5,7 +5,7 @@ import { useFormWithValidation } from '../../utils/Validation.js';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 
-function Register(props) {
+const Register = (props) => {
   const currentUser = React.useContext(CurrentUserContext);
   const { values, errors, isValid, handleChange } = useFormWithValidation();
 
@@ -31,10 +31,14 @@ function Register(props) {
               name="name"
               type="text"
               placeholder=""
+              pattern="[А-Яа-яA-Za-z -]{1,}"
+              minLength="2"
+              maxLength="30"
               defaultValue={currentUser.name}
-              className="form__input"
+              className={`form__input ${errors["name"] ? "form__invalid" : ""}`}
               onChange={handleChange}
             ></input>
+            <p className="form__error">{errors["name"]}</p>
             <p className="form__name">E-mail</p>
             <input
               required
@@ -44,9 +48,13 @@ function Register(props) {
               type="email"
               placeholder=""
               defaultValue={currentUser.email}
-              className="form__input"
+              className={`form__input ${errors["email"] ? "form__invalid" : ""}`}
               onChange={handleChange}
+              pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$"
+              minLength="8"
+              maxLength="30"
             ></input>
+            <p className="form__error">{errors["email"]}</p>
             <p className="form__name">Пароль</p>
             <input
               required
@@ -56,11 +64,14 @@ function Register(props) {
               type="password"
               placeholder=""
               defaultValue={currentUser.password}
-              className="form__input form__input-password"
+              className={`form__input ${errors["password"] ? "form__invalid" : ""}`}
               onChange={handleChange}
+              minLength="6"
+              maxLength="30"
             ></input>
-            <p className="form__error">{currentUser.message}</p>
-            <button type="submit" className="submit__button">
+            <p className="form__error">{errors["password"]}</p>
+            <p className="backend__error">{props.errorMessage}</p>
+            <button type="submit" className={`submit__button ${!isValid ? `submit__button-login_disabled` : ""}`}>
               {props.textButton}
             </button>
           </form>

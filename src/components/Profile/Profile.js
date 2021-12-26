@@ -2,22 +2,28 @@ import React, { useEffect } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useFormWithValidation } from '../../utils/Validation.js';
 
-function Profile({ onSignOut }) {
+function Profile(props) {
   const currentUser = React.useContext(CurrentUserContext);
-  const { values, errors, isValid, handleChange } = useFormWithValidation();
+  const { isValid, errors, values, handleChange } = useFormWithValidation();
 
   useEffect(() => {
     values["name"] = currentUser.name;
     values["email"] = currentUser.email;
-  }, [currentUser, values]);
+  }, [currentUser]);
+
 
   function handleSignOut() {
-    onSignOut();
+    props.onSignOut();
+  }
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    props.onUpdate(values["name"], values["email"]);
   }
 
   return (
     <section className="profile">
-      <form className="profile__form">
+      <form className="profile__form" onSubmit={handleSubmit}>
         <p className="profile__title">{`Привет, ${currentUser.name}`}</p>
         <div className="profile__container">
           <div className="profile__input-box">
@@ -25,27 +31,37 @@ function Profile({ onSignOut }) {
             <input
               required
               className="profile__input"
-              type="text"
+              type="name"
+              name="name"
               placeholder="Максим"
               onChange={handleChange}
               defaultValue={currentUser.name}
+              pattern="[А-Яа-яA-Za-z -]{1,}"
+              minLength="2"
+              maxLength="30"
             ></input>
           </div>
+          <p className="profile__error">{errors["name"]}</p>
           <div className="profile__input-box">
             <p className="profile__input-name">E-mail</p>
             <input
               required
-              className="profile__input"
+              className={`profile__input ${errors["email"] ? "profile__input_invalid" : ""}`}
               type="email"
+              name="email"
               placeholder="email"
               onChange={handleChange}
               defaultValue={currentUser.email}
+              minLength="8"
+              maxLength="30"
+              pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$"
             ></input>
           </div>
+          <p className="profile__error">{errors["email"]}</p>
           <div className="profile__buttons">
-            <button className="profile__button-edit" type="submit">
+          <button className={`profile__button-edit ${isValid ? "" : "profile__button-edit_disabled"}`} type="submit">
               Редактировать
-            </button>
+          </button>
               <button
                 onClick={handleSignOut}
                 className="profile__button-exit"

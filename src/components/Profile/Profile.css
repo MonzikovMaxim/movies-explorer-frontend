@@ -51,7 +51,6 @@
 }
 
 .profile__input-box:first-child {
-  margin: 0 0 17px 0;
   border-bottom: 1px solid #E8E8E8;
 }
 
@@ -86,7 +85,6 @@
   border-bottom: 1px solid #3456F3;
 }
 
-
 .profile__buttons {
   display: flex;
   flex-direction: column;
@@ -108,6 +106,11 @@
   transition: opacity .2s ease-in-out;
 }
 
+.profile__button-edit_disabled {
+  cursor: default;
+  color: #C2C2C2;
+}
+
 .profile__button-exit {
   border: none;
   background-color: transparent;
@@ -122,4 +125,15 @@
 
 .profile__button-exit:hover {
   opacity: .7;
+}
+
+.profile__error {
+  color: #FF4062;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  margin: 6px 0 11px 0;
+  max-width: 396px;
+  min-height: 10px;
 }

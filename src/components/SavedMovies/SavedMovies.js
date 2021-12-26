@@ -3,11 +3,13 @@ import SearchForm from '../SearchForm/SearchFrom';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
 
-function SavedMovies() {
+function SavedMovies(props) {
   return (
     <section className="saved-movies">
       <SearchForm />
-      <MoviesCardList />
+      <MoviesCardList
+
+      />
     </section>
   )
 }

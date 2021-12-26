@@ -1,4 +1,7 @@
 export const BASE_URL = "https://api.beatfilm-explorer.nomoredomains.rocks";
+export const headers = {
+  "Content-Type": "application/json"
+}
 
 export const checkStatus = (res) => {
   if (res.ok) {
@@ -6,6 +9,14 @@ export const checkStatus = (res) => {
 } else {
   return Promise.reject(`Ошибка: ${res.status}`);
   }
+}
+
+export const checkAuth = (headers) => {
+  const token = localStorage.getItem('jwt');
+  if (token) {
+    headers["Authorization"] = `Bearer ${token}`;
+  }
+  return headers;
 }
 
 export const register = (email, password, name) => {
@@ -39,15 +50,28 @@ export const authorize = (email, password) => {
 }
 
 export const getContent = () => {
-  console.log(localStorage.getItem("jwt"))
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
-    headers: {
-      "Accept": "application/json",
-      "Content-Type": "application/json",
-      "Authorization": `Bearer ${localStorage.getItem("jwt")}`,
-    },
+    headers: checkAuth(headers),
   })
     .then((res) => checkStatus(res));
 };
 
+export const getUserInfo = () => {
+  return fetch(`${BASE_URL}/users/me`, {
+    method: "GET",
+    headers: checkAuth(headers),
+  })
+  .then((res) => checkStatus(res))
+} 
+
+export const updateUserInfo = (name, email) => {
+  console.log(name)
+  return fetch(`${BASE_URL}/users/me`, {
+    method: 'PATCH',
+    headers: checkAuth(headers),
+    body: JSON.stringify({ name, email }),
+  })
+  .then((res) => checkStatus(res))
+  
+}

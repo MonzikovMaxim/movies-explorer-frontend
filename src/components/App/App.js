@@ -12,31 +12,49 @@ import Movies from "../Movies/Movies";
 import SavedMovies from "../Movies/Movies";
 import Footer from "../Footer/Footer";
 import Profile from "../Profile/Profile";
-// import Preloader from "../Preloader/Preloader.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
+  const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({});
+  const [errorMessage, setErrorMessage] = useState("");
   const [movies, setMovies] = useState([]);
   const [width, setWidth] = useState(window.innerWidth);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
- 
-  // авторизация
-  function handleLogin(email, password) {
-    setLoggedIn(true)
-    MainApi.authorize(email, password)
-      .then((res) => {
-        if (res?.token) {
-          console.log(loggedIn)
+
+
+  useEffect(() => {
+    if (loggedIn === true) {
+      setIsLoading(true);
+      Promise.all([MainApi.getUserInfo(), MoviesApi.getInitialMovies()])
+        .then(([userInfo, movies]) => {
+          localStorage.setItem("movies", JSON.stringify(movies));
+          setCurrentUser(userInfo);
+          // setMovies(movies);
+        })
+        .catch(() => console.log("ошибка с фильмами"))
+        .finally(() => setIsLoading(false));
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
+    debugger;
+    const token = localStorage.getItem("jwt");
+    if (token) {
+      debugger;
+      MainApi.getContent(token)
+        .then((userInfo) => {
+          debugger;
           setLoggedIn(true);
-          localStorage.setItem("jwt", res.token);
-          history.push("/movies");
-        }
-      })
-      .catch((error) => console.log(error));
-  }
+          setCurrentUser(userInfo);
+        })
+        .catch(() => setErrorMessage("При авторизации произошла ошибка. Токен не передан или передан не в том формате"));
+    } else {
+      setLoggedIn(false);
+      setIsLoading(false);
+    }
+  }, [loggedIn]);
 
   // регистрация
   function handleRegister(email, password, name) {
@@ -46,48 +64,41 @@ function App() {
           handleLogin(email, password);
         }
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(() => {
+        setErrorMessage("Пользователь с таким email уже существует");
+      })
   }
 
-  useEffect(() => {
-    const token = localStorage.getItem("jwt");
-    if (token) {
-      MainApi.getContent(token)
-        .then((res) => {
-          console.log(loggedIn)
-          setLoggedIn(true);
-          localStorage.setItem("id", res._id);
-        })
-        .catch((error) => console.log(error));
-    } else {
-      setLoggedIn(false);
-      setIsLoading(false)
-    }
-  }, [loggedIn]);
+  // авторизация
+  function handleLogin(email, password) {
+    MainApi.authorize(email, password)
+      .then((res) => {
+        setLoggedIn(true);
+        localStorage.setItem("jwt", res.token);
+        history.push("/movies");
+      })
+      .catch(() => setErrorMessage("Вы ввели неправильный логин или пароль."));
+  }
 
-  useEffect(() => {
-    if (loggedIn === true) {
-      setIsLoading(true)
-      console.log(loggedIn)
-      Promise.all([MainApi.getContent(), MoviesApi.getInitialMovies()])
-        .then(([userInfo, movies]) => {
-          console.log(loggedIn)
-          setCurrentUser(userInfo);
-          setMovies(movies);
-          localStorage.setItem("movies", JSON.stringify(movies));
-        })
-        .catch(() => console.log("ошибка с фильмами"))
-        .finally(() => setIsLoading(false));
-    }
-  }, [loggedIn]);
-
-
+  function updateUserInfo(name, email) {
+    setIsLoading(true);
+    MainApi.updateUserInfo(name, email)
+      .then((userData) => {
+        setCurrentUser(userData);
+      })
+      .catch(() => {
+        setErrorMessage("Пользователь с таким email уже существует.");
+      })
+      .finally(() =>{ 
+        setIsLoading(false);
+        setErrorMessage("При обновлении профиля произошла ошибка")
+      });
+  }
 
   function onSignOut() {
     localStorage.removeItem("jwt");
     localStorage.removeItem("id");
+    localStorage.removeItem("movies")
     setCurrentUser({});
     setLoggedIn(false);
     history.push("/");
@@ -97,18 +108,25 @@ function App() {
     setWidth(window.innerWidth);
   }
 
+  useEffect(() => {
+    window.addEventListener('resize', changeWidth);
+    return () => {
+      window.removeEventListener("resize", changeWidth)
+    }
+  })
+
   return (
     <div className="app">
       <CurrentUserContext.Provider value={currentUser}>
         <Header loggedIn={loggedIn} />
         <Switch>
           <Route exact path="/">
-            <Main 
-            isLoading={isLoading} />
+            <Main isLoading={isLoading} />
           </Route>
           <Route path="/signup">
             {loggedIn === true && <Redirect to="/" />}
             <Register
+              errorMessage={errorMessage}
               onRegister={handleRegister}
               formTitle="Добро пожаловать!"
               textButton="Зарегистрироваться"
@@ -119,6 +137,7 @@ function App() {
             {loggedIn === true && <Redirect to="/" />}
             <Login
               onLogin={handleLogin}
+              errorMessage={errorMessage}
               formTitle="Рады видеть"
               textButton="Войти"
               formQuestion="Ещё не зарегистрированы?"
@@ -144,11 +163,13 @@ function App() {
           />
           <ProtectedRoute
             exact
+            onUpdate={updateUserInfo}
             name={currentUser.name}
             email={currentUser.email}
             isLoading={isLoading}
             width={width}
             path="/profile"
+            errorMessage={errorMessage}
             component={Profile}
             loggedIn={loggedIn}
             onSignOut={onSignOut}

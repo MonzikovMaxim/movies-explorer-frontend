@@ -4,9 +4,9 @@ import logo from "../../images/logo.svg";
 import { useFormWithValidation } from '../../utils/Validation.js';
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
-function Login(props) {
+const Login = (props) => {
   const currentUser = React.useContext(CurrentUserContext);
-  const { values, errors, isValid, handleChange } = useFormWithValidation();
+  const { values, isValid, errors, handleChange } = useFormWithValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -26,13 +26,17 @@ function Login(props) {
             <input
               required
               autoComplete="off"
-              id="email"
               name="email"
               type="email"
               defaultValue={currentUser.email}
-              className="form__input"
+              className={`form__input ${errors["email"] ? "form__invalid" : ""}`}
               onChange={handleChange}
+              // disabled={isValid}
+              pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$"
+              minLength="6"
+              maxLength="30"
             ></input>
+            <p className="form__error">{errors["email"]}</p>
             <p className="form__name">Пароль</p>
             <input
               required
@@ -41,11 +45,14 @@ function Login(props) {
               name="password"
               type="password"
               defaultValue={currentUser.password}
-              className="form__input form__input-password"
+              className={`form__input ${errors["password"] ? "form__invalid" : ""}`}
               onChange={handleChange}
+              minLength="8"
+              maxLength="30"
             ></input>
-            <p className="form__error">{currentUser.message}</p>
-            <button type="submit" className="submit__button-login">
+            <p className="form__error">{errors["password"]}</p>
+            <p className="backend__error-login">{props.errorMessage}</p>
+            <button type="submit" className={`submit__button-login ${!isValid ? `submit__button-login_disabled` : ""}`}>
               {props.textButton}
             </button>
             <p className="form__question">
