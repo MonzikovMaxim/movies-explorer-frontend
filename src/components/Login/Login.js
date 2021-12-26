@@ -6,11 +6,12 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const Login = (props) => {
   const currentUser = React.useContext(CurrentUserContext);
-  const { values, isValid, errors, handleChange } = useFormWithValidation();
+  const { values, isValid, errors, handleChange, resetForm } = useFormWithValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
     props.onLogin(values["email"], values["password"])
+    resetForm();
   }
 
   return (
@@ -52,7 +53,7 @@ const Login = (props) => {
             ></input>
             <p className="form__error">{errors["password"]}</p>
             <p className="backend__error-login">{props.errorMessage}</p>
-            <button type="submit" className={`submit__button-login ${!isValid ? `submit__button-login_disabled` : ""}`}>
+            <button type="submit" className={`submit__button-login ${!isValid ? `submit__button_disabled` : ""}`}>
               {props.textButton}
             </button>
             <p className="form__question">

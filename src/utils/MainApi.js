@@ -66,7 +66,6 @@ export const getUserInfo = () => {
 } 
 
 export const updateUserInfo = (name, email) => {
-  console.log(name)
   return fetch(`${BASE_URL}/users/me`, {
     method: 'PATCH',
     headers: checkAuth(headers),

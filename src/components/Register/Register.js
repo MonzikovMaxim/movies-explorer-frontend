@@ -7,11 +7,12 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const Register = (props) => {
   const currentUser = React.useContext(CurrentUserContext);
-  const { values, errors, isValid, handleChange } = useFormWithValidation();
+  const { values, errors, isValid, handleChange, resetForm } = useFormWithValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
     props.onRegister(values["email"], values["password"], values["name"])
+    resetForm();
   }
 
   return (
@@ -71,7 +72,7 @@ const Register = (props) => {
             ></input>
             <p className="form__error">{errors["password"]}</p>
             <p className="backend__error">{props.errorMessage}</p>
-            <button type="submit" className={`submit__button ${!isValid ? `submit__button-login_disabled` : ""}`}>
+            <button type="submit" className={`submit__button ${!isValid ? `submit__button_disabled` : ""}`}>
               {props.textButton}
             </button>
           </form>

@@ -31,7 +31,6 @@ function App() {
         .then(([userInfo, movies]) => {
           localStorage.setItem("movies", JSON.stringify(movies));
           setCurrentUser(userInfo);
-          // setMovies(movies);
         })
         .catch(() => console.log("ошибка с фильмами"))
         .finally(() => setIsLoading(false));
@@ -39,14 +38,12 @@ function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    debugger;
     const token = localStorage.getItem("jwt");
     if (token) {
-      debugger;
       MainApi.getContent(token)
         .then((userInfo) => {
-          debugger;
           setLoggedIn(true);
+          localStorage.setItem("id", userInfo.id);
           setCurrentUser(userInfo);
         })
         .catch(() => setErrorMessage("При авторизации произошла ошибка. Токен не передан или передан не в том формате"));
@@ -71,6 +68,7 @@ function App() {
 
   // авторизация
   function handleLogin(email, password) {
+    setIsLoading(true)
     MainApi.authorize(email, password)
       .then((res) => {
         setLoggedIn(true);
@@ -87,11 +85,11 @@ function App() {
         setCurrentUser(userData);
       })
       .catch(() => {
-        setErrorMessage("Пользователь с таким email уже существует.");
+        setErrorMessage("При обновлении профиля произошла ошибка");
       })
       .finally(() =>{ 
         setIsLoading(false);
-        setErrorMessage("При обновлении профиля произошла ошибка")
+        setErrorMessage("Пользователь с таким email уже существует.")
       });
   }
 
@@ -99,6 +97,7 @@ function App() {
     localStorage.removeItem("jwt");
     localStorage.removeItem("id");
     localStorage.removeItem("movies")
+    setErrorMessage("")
     setCurrentUser({});
     setLoggedIn(false);
     history.push("/");

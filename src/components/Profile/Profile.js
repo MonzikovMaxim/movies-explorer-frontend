@@ -59,6 +59,7 @@ function Profile(props) {
           </div>
           <p className="profile__error">{errors["email"]}</p>
           <div className="profile__buttons">
+          <p className="profile__error">{props.errorMessage}</p>
           <button className={`profile__button-edit ${isValid ? "" : "profile__button-edit_disabled"}`} type="submit">
               Редактировать
           </button>
