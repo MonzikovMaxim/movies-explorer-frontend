@@ -19,6 +19,9 @@ function App() {
   const [currentUser, setCurrentUser] = useState({});
   const [errorMessage, setErrorMessage] = useState("");
   const [movies, setMovies] = useState([]);
+  const [savedMovies, setSavedMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([])
+  const [tumbler, setTumbler] = useState(false);
   const [width, setWidth] = useState(window.innerWidth);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
@@ -27,23 +30,44 @@ function App() {
   useEffect(() => {
     if (loggedIn === true) {
       setIsLoading(true);
-      Promise.all([MainApi.getUserInfo(), MoviesApi.getInitialMovies()])
-        .then(([userInfo, movies]) => {
-          localStorage.setItem("movies", JSON.stringify(movies));
-          setCurrentUser(userInfo);
-        })
-        .catch(() => console.log("ошибка с фильмами"))
-        .finally(() => setIsLoading(false));
+      MainApi.getUserInfo()
+      .then((userInfo) => {
+        setCurrentUser(userInfo)
+      })
+      .catch(() => console.log("ошибка с данными пользователя"))
+      .finally(() => setIsLoading(false));
     }
-  }, [loggedIn]);
+  }, [loggedIn])
+
+  useEffect(() => {
+    setIsLoading(true)
+    MoviesApi.getInitialMovies()
+    .then((movies) => {
+      setMovies(movies);
+      localStorage.setItem("movies", JSON.stringify(movies));
+    })
+    .catch(() => console.log("ошибка с фильмами"))
+    .finally(() => setIsLoading(false));
+  }, [])
+
+  useEffect(() => {
+    setIsLoading(true)
+    MainApi.getSavedMovies() 
+    .then((res) => {
+      setSavedMovies(res);
+    })
+    .catch(() => console.log("ошибка с сохраненными фильмами"))
+    .finally(() => setIsLoading(false));
+  }, [])
+
 
   useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
-      MainApi.getContent(token)
+      MainApi.getUserInfo()
         .then((userInfo) => {
           setLoggedIn(true);
-          localStorage.setItem("id", userInfo.id);
+          localStorage.setItem("id", userInfo._id);
           setCurrentUser(userInfo);
         })
         .catch(() => setErrorMessage("При авторизации произошла ошибка. Токен не передан или передан не в том формате"));
@@ -53,13 +77,12 @@ function App() {
     }
   }, [loggedIn]);
 
+
   // регистрация
   function handleRegister(email, password, name) {
     MainApi.register(email, password, name)
-      .then((res) => {
-        if (res.statusCode !== 400 && res.statusCode !== 409) {
-          handleLogin(email, password);
-        }
+      .then(() => {
+        handleLogin(email, password);
       })
       .catch(() => {
         setErrorMessage("Пользователь с таким email уже существует");
@@ -71,9 +94,12 @@ function App() {
     setIsLoading(true)
     MainApi.authorize(email, password)
       .then((res) => {
-        setLoggedIn(true);
-        localStorage.setItem("jwt", res.token);
-        history.push("/movies");
+        if (res.token) {
+          localStorage.setItem("jwt", res.token);
+          setLoggedIn(true);
+          history.push("/movies");
+          setErrorMessage("");
+        } 
       })
       .catch(() => setErrorMessage("Вы ввели неправильный логин или пароль."));
   }
@@ -91,6 +117,26 @@ function App() {
         setIsLoading(false);
         setErrorMessage("Пользователь с таким email уже существует.")
       });
+  }
+
+
+  function handleFilterMovies(array, inputData) {
+    const newArray = array.filter((item) => {
+      if (item.nameRU.toLowerCase().includes(inputData)) {
+        return item;
+      }
+    })
+
+    localStorage.setItem("filteredMovies", JSON.stringify(newArray))
+    setFilteredMovies(JSON.parse(localStorage.getItem("filteredMovies")))
+  }
+
+  function handleSaveMovies(movie) {
+    MainApi.saveMovies(movie) 
+    .then((res) => {
+      setSavedMovies([...savedMovies, res])
+    })
+    .catch(err => console.log(err))
   }
 
   function onSignOut() {
@@ -150,12 +196,14 @@ function App() {
             movies={movies}
             component={Movies}
             loggedIn={loggedIn}
+            handleFilterMovies={handleFilterMovies}
+            filteredMovies={filteredMovies}
+            handleSaveMovies={handleSaveMovies}
           />
           <ProtectedRoute
             exact
             path="/saved-movies"
-            movies={movies}
-            width={width}
+            movies={savedMovies}
             isLoading={isLoading}
             component={SavedMovies}
             loggedIn={loggedIn}

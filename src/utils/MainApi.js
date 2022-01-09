@@ -2,6 +2,7 @@ export const BASE_URL = "https://api.beatfilm-explorer.nomoredomains.rocks";
 export const headers = {
   "Content-Type": "application/json"
 }
+const site = `https://api.nomoreparties.co`;
 
 export const checkStatus = (res) => {
   if (res.ok) {
@@ -11,13 +12,14 @@ export const checkStatus = (res) => {
   }
 }
 
-export const checkAuth = (headers) => {
-  const token = localStorage.getItem('jwt');
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
-  }
-  return headers;
-}
+// export const checkAuth = (headers) => {
+//   const token = localStorage.getItem('jwt');
+//   console.log(headers)
+//   if (token) {
+//     headers["Authorization"] = `Bearer ${token}`;
+//   }
+//   return headers;
+// }
 
 export const register = (email, password, name) => {
   return fetch(`${BASE_URL}/signup`, {
@@ -49,18 +51,13 @@ export const authorize = (email, password) => {
   });
 }
 
-export const getContent = () => {
-  return fetch(`${BASE_URL}/users/me`, {
-    method: "GET",
-    headers: checkAuth(headers),
-  })
-    .then((res) => checkStatus(res));
-};
-
 export const getUserInfo = () => {
   return fetch(`${BASE_URL}/users/me`, {
     method: "GET",
-    headers: checkAuth(headers),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    },
   })
   .then((res) => checkStatus(res))
 } 
@@ -68,9 +65,50 @@ export const getUserInfo = () => {
 export const updateUserInfo = (name, email) => {
   return fetch(`${BASE_URL}/users/me`, {
     method: 'PATCH',
-    headers: checkAuth(headers),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    },
     body: JSON.stringify({ name, email }),
   })
   .then((res) => checkStatus(res))
-  
 }
+
+export const saveMovies = (movie) => {
+  return fetch(`${BASE_URL}/movies`, {
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    },
+    body: JSON.stringify({ 
+      country: movie.country,
+      director: movie.director,
+      duration: movie.duration,
+      year: movie.year,
+      description: movie.description,
+      image: site+movie.image.url,
+      trailer: movie.trailerLink,
+      thumbnail: movie.trailerLink,
+      movieId: movie.id,
+      nameRU: movie.nameRU,
+      nameEN: movie.nameEN 
+    }),
+  })
+  .then((res) => checkStatus(res))
+}
+
+export const getSavedMovies = () => {
+  return fetch(`${BASE_URL}/movies`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    },
+  })
+  .then((res) => checkStatus(res)
+  )
+  .then((data) => {
+    return data;
+  });
+};

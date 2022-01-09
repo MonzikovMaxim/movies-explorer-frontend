@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { Route } from "react-router-dom";
 
-function MoviesCard({movie}) {
+function MoviesCard(props) {
+  const {movie, handleSaveMovies} = props;
   const [isLiked, setIsLiked] = useState(false);
 
   function handleLikeClick() {
     if (!isLiked) {
+      handleSaveMovies(movie);
       setIsLiked(true);
     } else {
       setIsLiked(false);

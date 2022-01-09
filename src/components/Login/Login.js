@@ -6,23 +6,22 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const Login = (props) => {
   const currentUser = React.useContext(CurrentUserContext);
-  const { values, isValid, errors, handleChange, resetForm } = useFormWithValidation();
+  const { values, isValid, errors, handleChange } = useFormWithValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
     props.onLogin(values["email"], values["password"])
-    resetForm();
   }
 
   return (
     <Route>
       <div className="form">
-        <div className="form__container">
+        <div className="form__container" onSubmit={handleSubmit}>
           <Link to="/">
             <img className="form__logo" src={logo} alt="Логотип" />
           </Link>
           <h2 className="form__title">{props.formTitle}</h2>
-          <form className="form__data" onSubmit={handleSubmit}>
+          <form className="form__data" >
             <p className="form__name">E-mail</p>
             <input
               required
@@ -52,7 +51,8 @@ const Login = (props) => {
               maxLength="30"
             ></input>
             <p className="form__error">{errors["password"]}</p>
-            <p className="backend__error-login">{props.errorMessage}</p>
+            <div className="form__button-box">
+            {props.errorMessage && <p className="backend__error-login">{props.errorMessage}</p>}
             <button type="submit" className={`submit__button-login ${!isValid ? `submit__button_disabled` : ""}`}>
               {props.textButton}
             </button>
@@ -63,6 +63,7 @@ const Login = (props) => {
                 Регистрация
               </Link>
             </p>
+            </div>
           </form>
         </div>
       </div>

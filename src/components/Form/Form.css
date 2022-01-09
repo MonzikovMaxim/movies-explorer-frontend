@@ -3,13 +3,17 @@
   display: flex;
   background:#FFFFFF;
   width: 100%;
+  height: 100vh;
   justify-content: center;
 }
 
 
 .form__container {
+  display: flex;
+  flex-direction: column;
   max-width: 396px;
   margin: 70px auto;
+  justify-content: space-between;
 }
 
 @media (max-width: 768px) {
@@ -24,6 +28,21 @@
     height: 780px;
     max-width: 260px;
   }
+}
+
+.form__header {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__inputs {
+  display: flex;
+  flex-direction: column;
+}
+
+.form__buttons {
+  display: flex;
+  flex-direction: column;
 }
 
 .form__logo {
@@ -64,7 +83,6 @@
 .form__data {
   display: flex;
   flex-direction: column;
-  margin: 30px auto 0;
 }
 
 @media (max-width: 768px) {
@@ -91,6 +109,7 @@
 .form__name:not(:first-child) {
   margin: 24px 0 5px 0;
 }
+
 
 
 .form__input {
@@ -209,6 +228,12 @@
   }
 }
 
+.form__button-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .form__link {
   font-style: normal;
   font-weight: normal;
@@ -233,9 +258,10 @@
 }
 
 .backend__error {
+  position: relative;
   display: flex;
   justify-content: center;
-  margin: 221px 0 20px 0;
+  margin: 0 auto 10px;
   color: #FF4062;
   font-style: normal;
   font-weight: normal;
@@ -246,7 +272,8 @@
 
 
 .backend__error-login {
-  margin: 305px 0 20px 0;
+  position: relative;
+  margin: 0 auto 10px;
   display: flex;
   justify-content: center;
   color: #FF4062;

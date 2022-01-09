@@ -5,15 +5,17 @@ import Preloader from '../Preloader/Preloader';
 
 
 function Movies(props) {
-  return props.isLoading ? (
+  const { isLoading, movies, width, handleFilterMovies, filteredMovies, handleSaveMovies } = props;
+  return isLoading ? (
     <Preloader />
   ) : (
     <>
     <section className="movies">
-      <SearchForm />
+      <SearchForm handleFilterMovies={handleFilterMovies} movies={movies} />
       <MoviesCardList
-      movies={props.movies}
-      width={props.width} 
+      handleSaveMovies={handleSaveMovies}
+      movies={filteredMovies}
+      width={width} 
       />
     </section>
     </>
