@@ -2,7 +2,6 @@ export const BASE_URL = "https://api.beatfilm-explorer.nomoredomains.rocks";
 export const headers = {
   "Content-Type": "application/json"
 }
-const site = `https://api.nomoreparties.co`;
 
 export const checkStatus = (res) => {
   if (res.ok) {
@@ -74,7 +73,8 @@ export const updateUserInfo = (name, email) => {
   .then((res) => checkStatus(res))
 }
 
-export const saveMovies = (movie) => {
+export const saveMovie = (movie) => {
+  debugger;
   return fetch(`${BASE_URL}/movies`, {
     method: 'POST',
     headers: {
@@ -87,7 +87,7 @@ export const saveMovies = (movie) => {
       duration: movie.duration,
       year: movie.year,
       description: movie.description,
-      image: site+movie.image.url,
+      image: `https://api.nomoreparties.co${movie.image.url}`,
       trailer: movie.trailerLink,
       thumbnail: movie.trailerLink,
       movieId: movie.id,
@@ -95,8 +95,38 @@ export const saveMovies = (movie) => {
       nameEN: movie.nameEN 
     }),
   })
-  .then((res) => checkStatus(res))
+  .then((res) => { 
+    debugger;
+    checkStatus(res)
+  })
+  .then((data) => {
+    debugger;
+    return data;
+  });
 }
+
+export const deleteMovie = (movie) => {
+  return fetch(`${BASE_URL}/movies/${movie._id}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    },
+  })
+  .then((res) => 
+    checkStatus(res))
+  .then((data) => {
+    return data;
+  });
+}
+
+// export const changeLikeCardStatus = (movie, isLiked) => {
+//   if (isLiked) {
+//     return saveMovies(movie)
+//   } else {
+//     return deleteMovies(movie)
+//   }
+// }
 
 export const getSavedMovies = () => {
   return fetch(`${BASE_URL}/movies`, {
@@ -106,9 +136,8 @@ export const getSavedMovies = () => {
       Authorization: `Bearer ${localStorage.getItem('jwt')}`,
     },
   })
-  .then((res) => checkStatus(res)
-  )
+  .then((res) => checkStatus(res))
   .then((data) => {
     return data;
   });
-};
+}

@@ -9,7 +9,7 @@ import Register from "../Register/Register";
 import Main from "../Main/Main";
 import Error from "../Error/Error";
 import Movies from "../Movies/Movies";
-import SavedMovies from "../Movies/Movies";
+import SavedMovies from "../SavedMovies/SavedMovies";
 import Footer from "../Footer/Footer";
 import Profile from "../Profile/Profile";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
@@ -25,6 +25,7 @@ function App() {
   const [width, setWidth] = useState(window.innerWidth);
   const [isLoading, setIsLoading] = useState(false);
   const history = useHistory();
+  console.log(movies)
 
 
   useEffect(() => {
@@ -40,14 +41,15 @@ function App() {
   }, [loggedIn])
 
   useEffect(() => {
-    setIsLoading(true)
-    MoviesApi.getInitialMovies()
-    .then((movies) => {
-      setMovies(movies);
-      localStorage.setItem("movies", JSON.stringify(movies));
-    })
-    .catch(() => console.log("ошибка с фильмами"))
-    .finally(() => setIsLoading(false));
+    if (loggedIn) {
+      setIsLoading(true)
+      MoviesApi.getInitialMovies()
+      .then((movies) => {
+        setMovies(movies);
+      })
+      .catch(() => console.log("ошибка с фильмами"))
+      .finally(() => setIsLoading(false));
+    } 
   }, [])
 
   useEffect(() => {
@@ -77,7 +79,6 @@ function App() {
     }
   }, [loggedIn]);
 
-
   // регистрация
   function handleRegister(email, password, name) {
     MainApi.register(email, password, name)
@@ -104,6 +105,7 @@ function App() {
       .catch(() => setErrorMessage("Вы ввели неправильный логин или пароль."));
   }
 
+
   function updateUserInfo(name, email) {
     setIsLoading(true);
     MainApi.updateUserInfo(name, email)
@@ -121,28 +123,39 @@ function App() {
 
 
   function handleFilterMovies(array, inputData) {
+    console.log(array)
     const newArray = array.filter((item) => {
       if (item.nameRU.toLowerCase().includes(inputData)) {
         return item;
+        
       }
     })
-
+    console.log(newArray)
     localStorage.setItem("filteredMovies", JSON.stringify(newArray))
     setFilteredMovies(JSON.parse(localStorage.getItem("filteredMovies")))
   }
 
   function handleSaveMovies(movie) {
-    MainApi.saveMovies(movie) 
+    MainApi.saveMovie(movie) 
     .then((res) => {
       setSavedMovies([...savedMovies, res])
     })
     .catch(err => console.log(err))
   }
 
+  function handleDeleteMovies(movie) {
+    MainApi.deleteMovie(movie) 
+    .then(() => {
+      setSavedMovies(savedMovies.filter(savedMovie => savedMovie._id !== movie._id))
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+  }
+
   function onSignOut() {
     localStorage.removeItem("jwt");
     localStorage.removeItem("id");
-    localStorage.removeItem("movies")
     setErrorMessage("")
     setCurrentUser({});
     setLoggedIn(false);
@@ -159,6 +172,7 @@ function App() {
       window.removeEventListener("resize", changeWidth)
     }
   })
+
 
   return (
     <div className="app">
@@ -191,6 +205,7 @@ function App() {
           <ProtectedRoute
             exact
             path="/movies"
+            savedMovies={savedMovies}
             isLoading={isLoading}
             width={width}
             movies={movies}
@@ -198,24 +213,26 @@ function App() {
             loggedIn={loggedIn}
             handleFilterMovies={handleFilterMovies}
             filteredMovies={filteredMovies}
+            handleDeleteMovies={handleDeleteMovies}
             handleSaveMovies={handleSaveMovies}
           />
           <ProtectedRoute
             exact
             path="/saved-movies"
-            movies={savedMovies}
+            savedMovies={savedMovies}
             isLoading={isLoading}
-            component={SavedMovies}
             loggedIn={loggedIn}
+            component={SavedMovies}
+            handleDeleteMovies={handleDeleteMovies}
           />
           <ProtectedRoute
             exact
+            path="/profile"
             onUpdate={updateUserInfo}
             name={currentUser.name}
             email={currentUser.email}
             isLoading={isLoading}
             width={width}
-            path="/profile"
             errorMessage={errorMessage}
             component={Profile}
             loggedIn={loggedIn}

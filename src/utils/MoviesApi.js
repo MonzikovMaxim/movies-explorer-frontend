@@ -1,14 +1,14 @@
-export const headers = {
-  "Content-Type": "application/json"
-}
+// export const headers = {
+//   "Content-Type": "application/json"
+// }
 
-export const checkAuth = (headers) => {
-  const token = localStorage.getItem('jwt');
-  if (token) {
-    headers["Authorization"] = `Bearer ${token}`;
-  }
-  return headers;
-}
+// export const checkAuth = (headers) => {
+//   const token = localStorage.getItem('jwt');
+//   if (token) {
+//     headers["Authorization"] = `Bearer ${token}`;
+//   }
+//   return headers;
+// }
 
 export const checkStatus = (res) => {
   if (res.ok) {
@@ -21,7 +21,10 @@ export const checkStatus = (res) => {
 export const getInitialMovies = () => {
   return fetch("https://api.nomoreparties.co/beatfilm-movies", {
     method: "GET",
-    headers: checkAuth(headers),
+    headers: {
+      "Accept": "application/json",
+      "Content-Type": "application/json",
+    },
   })
     .then((res) => checkStatus(res));
 };

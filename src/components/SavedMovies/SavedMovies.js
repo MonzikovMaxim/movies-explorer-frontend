@@ -1,22 +1,26 @@
 import React from "react";
-import SearchForm from "../SearchForm/SearchFrom";
+import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../MoviesCardList/MoviesCardList";
+import Preloader from '../Preloader/Preloader';
 
 function SavedMovies(props) {
-  const { movies, isLoading, loggedIn } = props;
-  console.log(movies);
-  debugger;
-  return (
+  const { isLoading, savedMovies, handleDeleteMovies, loggedIn } = props;  
+  return isLoading ? (
+    <Preloader />
+  ) : (
+    <>
     <section className="saved-movies">
       <SearchForm />
-      {movies && (
+      {savedMovies && (
         <MoviesCardList
-          movies={movies}
+          savedMovies={savedMovies}
           isLoading={isLoading}
+          handleDeleteMovies={handleDeleteMovies}
           loggedIn={loggedIn}
         />
       )}
     </section>
+    </>
   );
 }
 

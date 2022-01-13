@@ -1,11 +1,13 @@
 import React from 'react';
-import SearchForm from '../SearchForm/SearchFrom';
+import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import Preloader from '../Preloader/Preloader';
 
-
 function Movies(props) {
-  const { isLoading, movies, width, handleFilterMovies, filteredMovies, handleSaveMovies } = props;
+  const { isLoading, movies, width, handleFilterMovies, filteredMovies, handleSaveMovies, handleDeleteMovies, savedMovies } = props;
+  console.log(movies)
+  // console.log(filteredMovies)
+ 
   return isLoading ? (
     <Preloader />
   ) : (
@@ -16,6 +18,8 @@ function Movies(props) {
       handleSaveMovies={handleSaveMovies}
       movies={filteredMovies}
       width={width} 
+      savedMovies={savedMovies}
+      handleDeleteMovies={handleDeleteMovies}
       />
     </section>
     </>
