@@ -5,12 +5,13 @@ import { useFormWithValidation } from "../../utils/Validation.js";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 const Register = (props) => {
+  const { onRegister, errorMessage, formQuestion, formTitle, textButton } = props;
   const currentUser = React.useContext(CurrentUserContext);
   const { values, errors, isValid, handleChange } = useFormWithValidation();
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.onRegister(values["email"], values["password"], values["name"]);
+    onRegister(values["email"], values["password"], values["name"]);
   }
 
   return (
@@ -21,7 +22,7 @@ const Register = (props) => {
             <Link to="/">
               <img className="form__logo" src={logo} alt="Логотип" />
             </Link>
-            <h2 className="form__title">{props.formTitle}</h2>
+            <h2 className="form__title">{formTitle}</h2>
           </div>
           <div className="form__inputs">
             <div className="form__data" >
@@ -74,15 +75,15 @@ const Register = (props) => {
                   errors["password"] ? "form__invalid" : ""
                 }`}
                 onChange={handleChange}
-                minLength="6"
+                minLength="8"
                 maxLength="30"
               ></input>
               <p className="form__error">{errors["password"]}</p>
             </div>
           </div>
           <div className="form__buttons">
-            {props.errorMessage && (
-              <p className="backend__error">{props.errorMessage}</p>
+            {errorMessage && (
+              <p className="backend__error">{errorMessage}</p>
             )}
             <button
               type="submit"
@@ -90,10 +91,10 @@ const Register = (props) => {
                 !isValid ? `submit__button_disabled` : ""
               }`}
             >
-              {props.textButton}
+              {textButton}
             </button>
             <p className="form__question">
-              {props.formQuestion}
+              {formQuestion}
               <Link to="/signin" className="form__link">
                 {" "}
                 Войти

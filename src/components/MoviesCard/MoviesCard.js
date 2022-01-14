@@ -9,10 +9,9 @@ function MoviesCard(props) {
   const movieLike = `movies-card__like ${
     isLiked ? "movies-card__like_active" : "movies-card__like"
   }`;
-  const movieDeleteLike = `movies-card__like ${
+  const movieDeleteLike = `movies-card__cross ${
     isLiked ? "movies-card__cross" : "movies-card__like"
   }`;
-
 
   React.useEffect(() => {
     savedMovies.map((saveMovie) => {
@@ -27,9 +26,6 @@ function MoviesCard(props) {
     let minutes = duration % 60;
     return hours + "ч " + minutes + "м";
   }
-  console.log(movies)
-  console.log(movies.image.url)
-  console.log(movies.url)
 
   return (
     <li className="movies-card">
@@ -41,7 +37,11 @@ function MoviesCard(props) {
       >
         <img
           className="movies-card__image"
-          src={location.pathname === "/movies" ? `https://api.nomoreparties.co${movies.image.url}` : `${movies.url}` }
+          src={
+            location.pathname === "/movies"
+              ? `https://api.nomoreparties.co${movies.image.url}`
+              : `${movies.image}`
+          }
           alt={movies.nameRU}
         ></img>
       </a>
@@ -49,23 +49,31 @@ function MoviesCard(props) {
         <div className="movies-card__box">
           <p className="movies-card__name">{movies.nameRU}</p>
           <Route exact path="/movies">
-            <button 
-            className={movieLike} 
-            onClick={() => {
-              if (isLiked) {
-                handleDeleteMovies(savedMovies.find((saveMovie) => saveMovie.movieId === movies.id));
-              } else {
-                handleSaveMovies(movies);
-              }
-              setIsLiked(!isLiked);
-            }}></button>
+            <button
+              className={movieLike}
+              onClick={() => {
+                if (isLiked) {
+                  handleDeleteMovies(
+                    savedMovies.find(
+                      (saveMovie) => saveMovie.movieId === movies.id
+                    )
+                  );
+                } else {
+                  handleSaveMovies(movies);
+                }
+                setIsLiked(!isLiked);
+              }}
+            ></button>
           </Route>
           <Route exact path="/saved-movies">
             <button
               className={movieDeleteLike}
               onClick={() => {
-                handleDeleteMovies(savedMovies.find((saveMovie) => saveMovie.movieId === movies.id))
-                console.log(movies.id)
+                handleDeleteMovies(
+                  savedMovies.find(
+                    (saveMovie) => saveMovie.movieId === movies.movieId
+                  )
+                );
               }}
             ></button>
           </Route>

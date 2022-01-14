@@ -3,6 +3,7 @@ import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import { useFormWithValidation } from '../../utils/Validation.js';
 
 function Profile(props) {
+  const { onSignOut, onUpdate, errorMessage } = props;
   const currentUser = React.useContext(CurrentUserContext);
   const { isValid, errors, values, handleChange } = useFormWithValidation();
 
@@ -13,12 +14,12 @@ function Profile(props) {
 
 
   function handleSignOut() {
-    props.onSignOut();
+    onSignOut();
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    props.onUpdate(values["name"], values["email"]);
+    onUpdate(values["name"], values["email"]);
   }
 
   return (
@@ -59,8 +60,8 @@ function Profile(props) {
           </div>
           <p className="profile__error">{errors["email"]}</p>
           <div className="profile__buttons">
-          <p className="profile__error">{props.errorMessage}</p>
-          <button className={`profile__button-edit ${isValid ? "" : "profile__button-edit_disabled"}`} type="submit">
+          {errorMessage && <p className="profile__error">{errorMessage}</p>}
+          <button className={`profile__button-edit ${isValid ? "" : "profile__button-edit_disabled"}`}  type="submit">
               Редактировать
           </button>
               <button

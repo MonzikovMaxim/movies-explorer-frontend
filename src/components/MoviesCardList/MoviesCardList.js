@@ -3,11 +3,24 @@ import { Route } from "react-router-dom";
 import MoviesCard from "../MoviesCard/MoviesCard";
 
 function MoviesCardList(props) {
-  const { movies, width, handleSaveMovies, handleDeleteMovies, savedMovies } =
-    props;
+  const {
+    movies,
+    width,
+    handleSaveMovies,
+    handleDeleteMovies,
+    savedMovies,
+    tumbler,
+  } = props;
+  
   const [moviesToShow, setMoviesToShow] = useState(
     width > 768 ? 12 : width > 480 ? 8 : 5
   );
+
+  const filteredMoviesByDuration = movies.filter((movie) => {
+    if ((movie.duration <= 40 && tumbler) || !tumbler) {
+      return movie;
+    }
+  });
 
   function showMore() {
     setMoviesToShow(
@@ -21,13 +34,13 @@ function MoviesCardList(props) {
 
   return (
     <section className="movies-list">
-      {movies.length > 0 ? (
+      {filteredMoviesByDuration.length > 0 ? (
         <ul className="movies-list__container">
-          {movies.slice(0, moviesToShow).map((movie) => {
+          {filteredMoviesByDuration.slice(0, moviesToShow).map((movie) => {
             return (
               <MoviesCard
-                key={movie.id}
-                movies={movies}
+                key={movie.id || movie.movieId}
+                movies={movie}
                 handleSaveMovies={handleSaveMovies}
                 savedMovies={savedMovies}
                 handleDeleteMovies={handleDeleteMovies}
@@ -43,7 +56,7 @@ function MoviesCardList(props) {
         <button
           type="button"
           className={`movies-list__button ${
-            moviesToShow >= movies ? "movies-list__button_disabled" : ""
+            moviesToShow >= filteredMoviesByDuration ? "movies-list__button_disabled" : ""
           }`}
           onClick={showMore}
         >

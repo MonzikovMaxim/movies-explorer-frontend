@@ -1,18 +1,21 @@
 import React from "react";
 
 function SearchForm(props) {
-  const { handleFilterMovies, movies } = props;
+  const { handleFilterMovies, movies, tumbler, setTumbler } = props;
   const [inputData, setInputData] = React.useState("");
 
   function handleChange(e) {
     setInputData(e.target.value);
   }
-  // console.log(movies)
 
   function handleSubmit(e) {
     e.preventDefault();
     handleFilterMovies(movies, inputData);
-    // console.log(movies)
+  }
+
+  function clickTumbler() {
+    localStorage.setItem("tumblerData", JSON.stringify(!tumbler));
+    setTumbler(!tumbler);
   }
 
   return (
@@ -26,6 +29,7 @@ function SearchForm(props) {
             type="search"
             placeholder="Фильм"
             onChange={handleChange}
+            defaultValue={JSON.parse(localStorage.getItem("inputData"))}
           ></input>
           <button className="search-form__button" type="submit"></button>
         </form>
@@ -33,7 +37,9 @@ function SearchForm(props) {
           <input
             required
             type="checkbox"
+            defaultChecked={tumbler}
             className="search-form__tumbler"
+            onClick={clickTumbler}
           ></input>
           <p className="search-form__subtitle">Короткометражки</p>
         </div>
