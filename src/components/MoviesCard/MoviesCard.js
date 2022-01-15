@@ -10,7 +10,7 @@ function MoviesCard(props) {
     isLiked ? "movies-card__like_active" : "movies-card__like"
   }`;
   const movieDeleteLike = `movies-card__cross ${
-    isLiked ? "movies-card__cross" : "movies-card__like"
+    isLiked ? "movies-card__cross" : ""
   }`;
 
   React.useEffect(() => {
