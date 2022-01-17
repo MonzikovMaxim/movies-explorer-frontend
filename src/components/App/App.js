@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, useHistory, useLocation, Redirect } from "react-router-dom";
+import { Route, Switch, useHistory, useLocation, Redirect} from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
 import * as MainApi from "../../utils/MainApi.js";
 import * as MoviesApi from "../../utils/MoviesApi.js";
@@ -130,8 +130,6 @@ function App() {
       .then((res) => {
         if (res.token) {
           setLoggedIn(true);
-          // localStorage.removeItem("savedMovies");
-          // localStorage.removeItem("jwt");
           localStorage.setItem("jwt", res.token);
           history.push("/movies");
           setErrorMessage("");
