@@ -103,7 +103,7 @@
   height: 20px;
   outline: none;
   border-radius: 20px;
-  background: #2BE080;
+  background: #EBEBEB;
   -webkit-appearance: none;
   transition: .5s;
   margin: 0 0 70px 0;
@@ -111,7 +111,7 @@
 }
 
 .search-form__tumbler:checked {
-  background: #EBEBEB;
+  background: #2BE080;
 }
 
 .search-form__tumbler:before {
@@ -121,14 +121,14 @@
   height: 8px;
   border-radius: 20px;
   top: 6px;
-  right: 6px;
+  left: 6px;
   background: #FFFFFF;
   transform: scale(1.1);
   transition: .5s;
 }
 
 .search-form__tumbler:checked:before {
-  right: 22px;
+  left: 22px;
 }
 
 @media (max-width: 1024px) {
