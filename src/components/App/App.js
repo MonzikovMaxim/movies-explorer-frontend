@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch, useHistory, useLocation } from "react-router-dom";
+import { Route, Switch, useHistory, useLocation, Redirect } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
 import * as MainApi from "../../utils/MainApi.js";
 import * as MoviesApi from "../../utils/MoviesApi.js";
@@ -100,11 +100,12 @@ function App() {
   }, [loggedIn]);
 
   function checkLocation() {
-    if (location.pathname === "/signin" || location.pathname === "/signup") {
-      history.push("/movies");
-    } else {
-      history.push(location.pathname);
-    }
+      if (location.pathname === "/signin" || location.pathname === "/signup") {
+        history.push("/movies");
+      } else {
+        history.push(location.pathname);
+      }
+
   }
 
   // регистрация
@@ -257,8 +258,8 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Header loggedIn={loggedIn} />
         <Switch>
-          <Route exact path="/">
-            <Main isLoading={isLoading} loggedIn={loggedIn} />
+          <Route exact path="/" >
+            <Main isLoading={isLoading} />
           </Route>
           <Route exact path="/signup" loggedIn={loggedIn}>
             <Register

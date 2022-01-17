@@ -32,13 +32,11 @@ function MoviesCardList(props) {
         : moviesToShow + 1
     );
   }
-  console.log(filteredMoviesByDuration)
-
+  
   return (
     <section className="movies-list">
-      {filteredMoviesByDuration.length === 0 ? (
-        <p className="movies-list__title">Фильмы не найдены</p>
-      ) : (
+      {filteredMoviesByDuration.length === 0  && <p className="movies-list__title">Фильмы не найдены</p>}
+
         <ul className="movies-list__container">
           {filteredMoviesByDuration.slice(0, moviesToShow).map((movie) => {
             return (
@@ -46,14 +44,13 @@ function MoviesCardList(props) {
                 key={movie.id || movie.movieId}
                 movies={movie}
                 handleSaveMovies={handleSaveMovies}
-                
                 savedMovies={savedMovies}
                 handleDeleteMovies={handleDeleteMovies}
               />
             );
           })}
         </ul>
-      )}
+      )
 
       <Route exact path={["/movies", "/saved-movies"]}>
         <button
