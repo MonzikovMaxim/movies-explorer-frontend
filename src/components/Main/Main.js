@@ -7,7 +7,8 @@ import Portfolio from '../Portfolio/Portfolio';
 import Preloader from '../Preloader/Preloader';
 
 function Main(props) {
-  return props.isLoading ? (
+  const { isLoading } = props;
+  return isLoading ? (
   <Preloader />
   ) : (
     <>

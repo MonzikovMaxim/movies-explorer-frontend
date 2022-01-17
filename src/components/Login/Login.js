@@ -37,7 +37,7 @@ const Login = (props) => {
                   errors["email"] ? "form__invalid" : ""
                 }`}
                 onChange={handleChange}
-                pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$"
+                pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,63}$"
                 minLength="6"
                 maxLength="30"
               ></input>

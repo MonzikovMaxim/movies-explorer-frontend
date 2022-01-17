@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { Route, Switch, useHistory } from "react-router-dom";
+import React from "react";
+import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import ProtectedRoute from "../ProtectedRoute/ProtectedRoute.js";
 import * as MainApi from "../../utils/MainApi.js";
 import * as MoviesApi from "../../utils/MoviesApi.js";
@@ -15,18 +15,19 @@ import Profile from "../Profile/Profile";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(true);
-  const [currentUser, setCurrentUser] = useState({});
-  const [errorMessage, setErrorMessage] = useState("");
-  const [movies, setMovies] = useState([]);
-  const [savedMovies, setSavedMovies] = useState([]);
-  const [filteredMovies, setFilteredMovies] = useState([]);
-  const [filteredSavedMovies, setFilteredSavedMovies] = useState([]);
-  const [tumbler, setTumbler] = useState(false);
-  const [width, setWidth] = useState(window.innerWidth);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(false);
+  const [currentUser, setCurrentUser] = React.useState({});
+  const [errorMessage, setErrorMessage] = React.useState("");
+  const [movies, setMovies] = React.useState([]);
+  const [savedMovies, setSavedMovies] = React.useState([]);
+  const [filteredMovies, setFilteredMovies] = React.useState([]);
+  const [filteredSavedMovies, setFilteredSavedMovies] = React.useState([]);
+  const [tumbler, setTumbler] = React.useState(false);
+  const [tumblerSavedMovies, setTumblerSavedMovies] = React.useState(false);
+  const [width, setWidth] = React.useState(window.innerWidth);
+  const [isLoading, setIsLoading] = React.useState(false);
   const history = useHistory();
-
+  const location = useLocation();
 
   //получаем состояние тумблера и фильмов при первом заходе на сайт
   React.useEffect(() => {
@@ -34,7 +35,7 @@ function App() {
     setFilteredMovies(JSON.parse(localStorage.getItem("filteredMovies")));
   }, []);
 
-  //проверяем 
+  //проверяем
   React.useEffect(() => {
     const token = localStorage.getItem("jwt");
     if (token) {
@@ -45,18 +46,20 @@ function App() {
         })
         .catch((err) => {
           setLoggedIn(false);
-          setErrorMessage(err.message)
-        })
+          setErrorMessage(err.message);
+        });
     }
   }, [loggedIn]);
-  
+
   //получаем данные пользователя
   React.useEffect(() => {
+    checkLocation();
     if (loggedIn) {
       setIsLoading(true);
       MainApi.getUserInfo()
         .then((userInfo) => {
           setCurrentUser(userInfo);
+          setLoggedIn(true);
         })
         .catch(() => console.log("Ошибка при получении данных пользователя"))
         .finally(() => setIsLoading(false));
@@ -65,19 +68,26 @@ function App() {
 
   //получаем массив с сохраненными фильмами со своего апи
   React.useEffect(() => {
-    setIsLoading(true);
-    MainApi.getSavedMovies()
-      .then((res) => {
-        setSavedMovies(res);
-        localStorage.setItem("savedMovies", JSON.stringify(res));
-        setFilteredSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
-      })
-      .catch(() => console.log("Ошибка при загрузке сохраненных фильмов"))
-      .finally(() => setIsLoading(false));
-  }, []);
+    checkLocation();
+    if (loggedIn) {
+      setIsLoading(true);
+      MainApi.getSavedMovies()
+        .then((res) => {
+          setSavedMovies(res);
+          checkLocation();
+          localStorage.setItem("savedMovies", JSON.stringify(res));
+          setFilteredSavedMovies(
+            JSON.parse(localStorage.getItem("savedMovies"))
+          );
+        })
+        .catch(() => console.log("Ошибка при загрузке сохраненных фильмов"))
+        .finally(() => setIsLoading(false));
+    }
+  }, [loggedIn]);
 
   //получаем массив фильмов со стороннего апи
   React.useEffect(() => {
+    checkLocation();
     if (loggedIn) {
       setIsLoading(true);
       MoviesApi.getInitialMovies()
@@ -89,6 +99,13 @@ function App() {
     }
   }, [loggedIn]);
 
+  function checkLocation() {
+    if (location.pathname === "/signin" || location.pathname === "/signup") {
+      history.push("/movies");
+    } else {
+      history.push(location.pathname);
+    }
+  }
 
   // регистрация
   function handleRegister(email, password, name) {
@@ -99,12 +116,11 @@ function App() {
         handleLogin(email, password);
       })
       .catch((err) => {
-        setErrorMessage(err.message)
+        setErrorMessage(err.message);
       })
       .finally(() => {
-        setErrorMessage("")
         setIsLoading(false);
-      })
+      });
   }
 
   // авторизация
@@ -114,6 +130,8 @@ function App() {
       .then((res) => {
         if (res.token) {
           setLoggedIn(true);
+          localStorage.removeItem("savedMovies");
+          localStorage.removeItem("jwt");
           localStorage.setItem("jwt", res.token);
           history.push("/movies");
           setErrorMessage("");
@@ -121,12 +139,11 @@ function App() {
       })
       .catch((err) => {
         setLoggedIn(false);
-        setErrorMessage(err.message)
+        setErrorMessage(err.message);
       })
       .finally(() => {
-        setErrorMessage("")
         setIsLoading(false);
-      })
+      });
   }
 
   //обновление данных пользователя
@@ -135,10 +152,10 @@ function App() {
     MainApi.updateUserInfo(name, email)
       .then((userData) => {
         setCurrentUser(userData);
-        setErrorMessage("Данные успешно обновлены")
+        setErrorMessage("Данные успешно обновлены");
       })
       .catch((err) => {
-        setErrorMessage(err.message)
+        setErrorMessage(err.message);
       })
       .finally(() => {
         setIsLoading(false);
@@ -148,7 +165,7 @@ function App() {
   //создание массива с отфильтрованными фильмами
   function handleFilterMovies(array, inputData) {
     const newArray = array.filter((movie) => {
-      if (movie.nameRU.includes(inputData)) {
+      if (movie.nameRU.toLowerCase().includes(inputData.toLowerCase())) {
         return movie;
       }
     });
@@ -160,11 +177,11 @@ function App() {
   //создание массива с отфильтрованными сохраненными фильмами
   function handleFilterSavedMovies(array, inputData) {
     const newArray = array.filter((movie) => {
-      if (movie.nameRU.includes(inputData)) {
+      if (movie.nameRU.toLowerCase().includes(inputData.toLowerCase())) {
         return movie;
       }
     });
-    localStorage.setItem("inputData", JSON.stringify(inputData));
+    // localStorage.setItem("inputData", JSON.stringify(inputData));
     localStorage.setItem("filteredSavedMovies", JSON.stringify(newArray));
     setFilteredSavedMovies(
       JSON.parse(localStorage.getItem("filteredSavedMovies"))
@@ -177,11 +194,15 @@ function App() {
       .then((res) => {
         setSavedMovies([...savedMovies, res]);
         setFilteredSavedMovies([...savedMovies, res]);
+        localStorage.setItem(
+          "savedMovies",
+          JSON.stringify([...savedMovies, res])
+        );
       })
       .catch((err) => {
-        console.log(err.message)
-      })
-  }
+        console.log(err.message);
+      });
+  };
 
   //удаление фильма (дизлайк)
   function handleDeleteMovies(movie) {
@@ -193,20 +214,24 @@ function App() {
         setFilteredSavedMovies(
           savedMovies.filter((savedMovie) => savedMovie._id !== movie._id)
         );
+        localStorage.setItem("savedMovies", JSON.stringify(savedMovies));
       })
       .catch((err) => {
-        console.log(err.message)
-      })
+        console.log(err.message);
+      });
   }
 
   //кнопка выхода
   function onSignOut() {
+    localStorage.removeItem("id");
     localStorage.removeItem("jwt");
     localStorage.removeItem("savedMovies");
     localStorage.removeItem("inputData");
     localStorage.removeItem("filteredMovies");
     localStorage.removeItem("filteredSavedMovies");
     localStorage.removeItem("tumblerData");
+    setMovies([]);
+    setFilteredMovies([]);
     setErrorMessage("");
     setCurrentUser({});
     setLoggedIn(false);
@@ -231,7 +256,7 @@ function App() {
         <Header loggedIn={loggedIn} />
         <Switch>
           <Route exact path="/">
-            <Main isLoading={isLoading} />
+            <Main isLoading={isLoading} loggedIn={loggedIn} />
           </Route>
           <Route exact path="/signup" loggedIn={loggedIn}>
             <Register
@@ -274,10 +299,12 @@ function App() {
             isLoading={isLoading}
             loggedIn={loggedIn}
             component={SavedMovies}
+            width={width}
             handleDeleteMovies={handleDeleteMovies}
-            tumbler={tumbler}
-            setTumbler={setTumbler}
+            tumbler={tumblerSavedMovies}
+            setTumbler={setTumblerSavedMovies}
             filteredSavedMovies={filteredSavedMovies}
+            setFilteredSavedMovies={setFilteredSavedMovies}
             handleFilterSavedMovies={handleFilterSavedMovies}
           />
           <ProtectedRoute

@@ -16,6 +16,7 @@ function MoviesCardList(props) {
     width > 768 ? 12 : width > 480 ? 8 : 5
   );
 
+  
   const filteredMoviesByDuration = movies.filter((movie) => {
     if ((movie.duration <= 40 && tumbler) || !tumbler) {
       return movie;
@@ -52,11 +53,11 @@ function MoviesCardList(props) {
         <p className="movies-list__title">Фильмы не найдены</p>
       )}
 
-      <Route exact path="/movies">
+      <Route exact path={["/movies", "/saved-movies"]}>
         <button
           type="button"
           className={`movies-list__button ${
-            moviesToShow >= filteredMoviesByDuration ? "movies-list__button_disabled" : ""
+            moviesToShow >= filteredMoviesByDuration.length && "movies-list__button_disabled"
           }`}
           onClick={showMore}
         >

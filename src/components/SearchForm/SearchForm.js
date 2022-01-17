@@ -1,16 +1,21 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 
 function SearchForm(props) {
   const { handleFilterMovies, movies, tumbler, setTumbler } = props;
   const [inputData, setInputData] = React.useState("");
+  const [inputSavedData, setInputSavedData] = React.useState("");
+  const location = useLocation();
 
   function handleChange(e) {
-    setInputData(e.target.value);
+    location.pathname === "/movies"
+      ? setInputData(e.target.value)
+      : setInputSavedData(e.target.value);
   }
 
   function handleSubmit(e) {
     e.preventDefault();
-    handleFilterMovies(movies, inputData);
+    handleFilterMovies(movies, location.pathname === "/movies" ? inputData : inputSavedData) 
   }
 
   function clickTumbler() {
@@ -29,7 +34,11 @@ function SearchForm(props) {
             type="search"
             placeholder="Фильм"
             onChange={handleChange}
-            defaultValue={JSON.parse(localStorage.getItem("inputData"))}
+            defaultValue={
+              location.pathname === "/movies"
+                ? JSON.parse(localStorage.getItem("inputData"))
+                : ""
+            }
           ></input>
           <button className="search-form__button" type="submit"></button>
         </form>

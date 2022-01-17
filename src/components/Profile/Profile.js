@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
-import { useFormWithValidation } from '../../utils/Validation.js';
+import { useFormWithValidation } from "../../utils/Validation.js";
 
 function Profile(props) {
   const { onSignOut, onUpdate, errorMessage } = props;
@@ -11,7 +11,6 @@ function Profile(props) {
     values["name"] = currentUser.name;
     values["email"] = currentUser.email;
   }, [currentUser]);
-
 
   function handleSignOut() {
     onSignOut();
@@ -40,6 +39,7 @@ function Profile(props) {
               pattern="[А-Яа-яA-Za-z -]{1,}"
               minLength="2"
               maxLength="30"
+              
             ></input>
           </div>
           <p className="profile__error">{errors["name"]}</p>
@@ -47,7 +47,9 @@ function Profile(props) {
             <p className="profile__input-name">E-mail</p>
             <input
               required
-              className={`profile__input ${errors["email"] ? "profile__input_invalid" : ""}`}
+              className={`profile__input ${
+                errors["email"] ? "profile__input_invalid" : ""
+              }`}
               type="email"
               name="email"
               placeholder="email"
@@ -55,22 +57,28 @@ function Profile(props) {
               defaultValue={currentUser.email}
               minLength="8"
               maxLength="30"
-              pattern="^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)+$"
+              pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,63}$"
             ></input>
           </div>
           <p className="profile__error">{errors["email"]}</p>
           <div className="profile__buttons">
-          {errorMessage && <p className="profile__error">{errorMessage}</p>}
-          <button className={`profile__button-edit ${isValid ? "" : "profile__button-edit_disabled"}`} disabled={!isValid} type="submit">
+            {errorMessage && <p className="profile__error">{errorMessage}</p>}
+            <button
+              className={`profile__button-edit ${
+                isValid ? "" : "profile__button-edit_disabled"
+              }`}
+              disabled={!isValid || (currentUser.name === values["name"] && currentUser.email === values["email"]) }
+              type="submit"
+            >
               Редактировать
-          </button>
-              <button
-                onClick={handleSignOut}
-                className="profile__button-exit"
-                type="button"
-              >
-                Выйти из аккаунта
-              </button>
+            </button>
+            <button
+              onClick={handleSignOut}
+              className="profile__button-exit"
+              type="button"
+            >
+              Выйти из аккаунта
+            </button>
           </div>
         </div>
       </form>

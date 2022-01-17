@@ -13,7 +13,19 @@ function SavedMovies(props) {
     setTumbler,
     filteredSavedMovies,
     handleFilterSavedMovies,
+    setFilteredSavedMovies,
+    width
   } = props;
+
+
+  React.useEffect(() => {
+    setFilteredSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
+    return(() => {
+      setFilteredSavedMovies(JSON.parse(localStorage.getItem("savedMovies")));
+    })
+  }, [])
+  
+
 
   return isLoading ? (
     <Preloader />
@@ -35,6 +47,7 @@ function SavedMovies(props) {
             loggedIn={loggedIn}
             tumbler={tumbler}
             setTumbler={setTumbler}
+            width={width}
           />
         )}
       </section>
