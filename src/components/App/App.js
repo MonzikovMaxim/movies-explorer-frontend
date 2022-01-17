@@ -74,7 +74,6 @@ function App() {
       MainApi.getSavedMovies()
         .then((res) => {
           setSavedMovies(res);
-          checkLocation();
           localStorage.setItem("savedMovies", JSON.stringify(res));
           setFilteredSavedMovies(
             JSON.parse(localStorage.getItem("savedMovies"))
@@ -131,8 +130,8 @@ function App() {
       .then((res) => {
         if (res.token) {
           setLoggedIn(true);
-          localStorage.removeItem("savedMovies");
-          localStorage.removeItem("jwt");
+          // localStorage.removeItem("savedMovies");
+          // localStorage.removeItem("jwt");
           localStorage.setItem("jwt", res.token);
           history.push("/movies");
           setErrorMessage("");
@@ -233,7 +232,6 @@ function App() {
     localStorage.removeItem("tumblerData");
     setTumbler(false);
     setTumblerSavedMovies(false);
-    setMovies([]);
     setFilteredMovies([]);
     setErrorMessage("");
     setCurrentUser({});
@@ -258,7 +256,7 @@ function App() {
       <CurrentUserContext.Provider value={currentUser}>
         <Header loggedIn={loggedIn} />
         <Switch>
-          <Route exact path="/" >
+          <Route exact path="/" loggedIn={loggedIn}>
             <Main isLoading={isLoading} />
           </Route>
           <Route exact path="/signup" loggedIn={loggedIn}>
@@ -282,12 +280,12 @@ function App() {
           <ProtectedRoute
             exact
             path="/movies"
+            component={Movies}
+            loggedIn={loggedIn}
             savedMovies={savedMovies}
             isLoading={isLoading}
             width={width}
             movies={movies}
-            component={Movies}
-            loggedIn={loggedIn}
             handleFilterMovies={handleFilterMovies}
             filteredMovies={filteredMovies}
             handleDeleteMovies={handleDeleteMovies}
@@ -298,10 +296,10 @@ function App() {
           <ProtectedRoute
             exact
             path="/saved-movies"
-            savedMovies={savedMovies}
-            isLoading={isLoading}
             loggedIn={loggedIn}
             component={SavedMovies}
+            savedMovies={savedMovies}
+            isLoading={isLoading}
             width={width}
             handleDeleteMovies={handleDeleteMovies}
             tumbler={tumblerSavedMovies}
@@ -313,14 +311,14 @@ function App() {
           <ProtectedRoute
             exact
             path="/profile"
+            loggedIn={loggedIn}
+            component={Profile}
             onUpdate={updateUserInfo}
             name={currentUser.name}
             email={currentUser.email}
             isLoading={isLoading}
             width={width}
             errorMessage={errorMessage}
-            component={Profile}
-            loggedIn={loggedIn}
             onSignOut={onSignOut}
           />
           <Route path="*">

@@ -32,11 +32,10 @@ function MoviesCardList(props) {
         : moviesToShow + 1
     );
   }
-  
+
   return (
     <section className="movies-list">
-      {filteredMoviesByDuration.length === 0  && <p className="movies-list__title">Фильмы не найдены</p>}
-
+      {movies.length === 0 && <p className="movies-list__title">Фильмы не найдены</p>}
         <ul className="movies-list__container">
           {filteredMoviesByDuration.slice(0, moviesToShow).map((movie) => {
             return (
