@@ -230,6 +230,8 @@ function App() {
     localStorage.removeItem("filteredMovies");
     localStorage.removeItem("filteredSavedMovies");
     localStorage.removeItem("tumblerData");
+    setTumbler(false);
+    setTumblerSavedMovies(false);
     setMovies([]);
     setFilteredMovies([]);
     setErrorMessage("");
